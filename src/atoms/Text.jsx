@@ -1,11 +1,11 @@
 function Text({ children, variant = "body", className = "" }) {
   const variants = {
-    h1: "text-2xl font-bold text-[#0D0D0D]",
-    h2: "text-xl font-semibold text-[#0D0D0D]",
-    h3: "text-lg font-medium text-[#0D0D0D]",
-    body: "text-base font-normal text-[#0D0D0D]",
-    small: "text-sm font-normal text-[#595959]",
-    muted: "text-xs font-normal text-[#A6A6A6]",
+    h1: "text-2xl font-bold",
+    h2: "text-xl font-semibold",
+    h3: "text-lg font-medium",
+    body: "text-base font-normal",
+    small: "text-sm font-normal",
+    muted: "text-xs font-normal",
   }
 
   const tags = {
