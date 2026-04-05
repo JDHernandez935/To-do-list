@@ -4,6 +4,7 @@ import Button from "./atoms/Button"
 import Input from "./atoms/Input"
 import Badge from "./atoms/Badge"
 import Checkbox from "./atoms/Checkbox"
+import Text from "./atoms/Text"
 
 function App() {
   const [checked, setChecked] = useState(false)
@@ -29,6 +30,12 @@ function App() {
           onChange={() => setChecked(!checked)}
         />
       </div>
+
+      <Text variant="h1">Título principal</Text>
+      <Text variant="h2">Subtítulo</Text>
+      <Text variant="body">Texto normal del cuerpo</Text>
+      <Text variant="small">Texto pequeño</Text>
+      <Text variant="muted">Texto muy sutil</Text>
     </div>
   )
 }
