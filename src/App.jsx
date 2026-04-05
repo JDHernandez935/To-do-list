@@ -5,9 +5,11 @@ import Input from "./atoms/Input"
 import Badge from "./atoms/Badge"
 import Checkbox from "./atoms/Checkbox"
 import Text from "./atoms/Text"
+import Toggle from "./atoms/Toggle"
 
 function App() {
   const [checked, setChecked] = useState(false)
+  const [darkMode, setDarkMode] = useState(false)
 
   return (
     <div className="p-8 flex flex-col gap-4">
@@ -36,6 +38,8 @@ function App() {
       <Text variant="body">Texto normal del cuerpo</Text>
       <Text variant="small">Texto pequeño</Text>
       <Text variant="muted">Texto muy sutil</Text>
+
+      <Toggle enabled={darkMode} onChange={() => setDarkMode(!darkMode)} />
     </div>
   )
 }
