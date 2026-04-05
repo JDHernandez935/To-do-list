@@ -6,6 +6,7 @@ import Badge from "./atoms/Badge"
 import Checkbox from "./atoms/Checkbox"
 import Text from "./atoms/Text"
 import Toggle from "./atoms/Toggle"
+import Icon from "./atoms/Icon"
 
 function App() {
   const [checked, setChecked] = useState(false)
@@ -40,6 +41,17 @@ function App() {
       <Text variant="muted">Texto muy sutil</Text>
 
       <Toggle enabled={darkMode} onChange={() => setDarkMode(!darkMode)} />
+
+      <div className="flex gap-4 items-center">
+        <Icon name="Search" />
+        <Icon name="Trash2" />
+        <Icon name="Calendar" />
+        <Icon name="Moon" />
+        <Icon name="Sun" />
+        <Icon name="Menu" />
+        <Icon name="Plus" />
+        <Icon name="Pencil" />
+      </div>
     </div>
   )
 }
