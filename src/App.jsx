@@ -3,6 +3,7 @@ import { useState } from "react"
 import Text from "./atoms/Text"
 import Toggle from "./molecules/Toggle"
 import SearchBar from "./molecules/SearchBar"
+import IconButton from "./molecules/IconButton"
 
 function App() {
   const [darkMode, setDarkMode] = useState(false)
@@ -20,7 +21,7 @@ function App() {
         disabledIcon="Moon"
       />
 
-      <Text variant="h2" className="text[#e0e0e0]">Searchbar</Text>
+      <Text variant="h2" className="text-[#e0e0e0]">Searchbar</Text>
       <SearchBar
         value={search}
         onChange={(e) => setSearch(e.target.value)}
@@ -35,6 +36,30 @@ function App() {
       <Text variant="small" className="text-[#6a6a9a]">
         Buscando: {search}
       </Text>
+
+      <Text variant="h2" className="text-[#e0e0e0]">IconButton</Text>
+      <div className="flex gap-3 items-center">
+
+        <IconButton
+          iconName="Trash2"
+          className="w-10 h-10 rounded-full bg-[#4a4a6a] hover:bg-red-500 active:scale-95 transition-all duration-150"
+          iconClassName="text-[#e0e0e0]"
+        />
+
+        <IconButton
+          iconName="Pencil"
+          className="w-10 h-10 rounded-full bg-[#4a4a6a] hover:bg-[#7B2FBE] active:scale-95 transition-all duration-150"
+          iconClassName="text-[#e0e0e0]"
+        />
+
+        <IconButton
+          iconName="Plus"
+          className="w-14 h-14 rounded-full bg-[#7B2FBE] hover:bg-[#9B4FDE] active:scale-95 transition-all duration-150"
+          iconClassName="text-white"
+          size={24}
+        />
+
+      </div>
     </div>
   )
 }
