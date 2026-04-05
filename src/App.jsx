@@ -3,9 +3,13 @@ import { useState } from "react"
 import Text from "./atoms/Text"
 import TaskList from "./organism/TaskList"
 import Navbar from "./organism/NavBar"
+import TaskForm from "./organism/TaskForm"
+import FilterModal from "./organism/FilterModal"
 
 function App() {
   const [activeTab, setActiveTab] = useState("home")
+  const [activeFilter, setActiveFilter] = useState("all")
+
   const [tasks, setTasks] = useState([
     { id: 1, title: "Entregar proyecto", dueDate: "2024-04-09", completed: false },
     { id: 2, title: "Estudiar React", dueDate: "2024-04-04", completed: false },
@@ -20,16 +24,32 @@ function App() {
     ))
   }
 
-
   return (
     <div className="p-8 flex flex-col gap-6 bg-[#1a1a2e] min-h-screen">
-       <Text variant="h2" className="text-[#e0e0e0]">
+      <Text variant="h2" className="text-[#e0e0e0]">
         {tasks.filter(t => !t.completed).length} tareas pendientes
-        </Text>
-        <TaskList tasks={tasks} onToggle={handleToggle} />
+      </Text>
+      
+      <TaskList tasks={tasks} onToggle={handleToggle} />
 
-        <div className="fixed bottom-0 left-0 right-0 bg-[#1a1a2e] border-t border-[#4a4a6a]">
-          <Navbar activeTab={activeTab} onTabChange={setActiveTab} />
+      <div className="fixed bottom-0 left-0 right-0 bg-[#1a1a2e] border-t border-[#4a4a6a]">
+        <Navbar activeTab={activeTab} onTabChange={setActiveTab} />
+      </div>
+
+      <div className="p-4 rounded-lg bg-[#2a2a4a] border border-[#4a4a6a]">
+        <TaskForm
+          mode="create"
+          onSubmit={(data) => console.log("Crear:", data)}
+          onCancel={() => console.log("Cancelar")}
+        />
+      </div>
+
+      <div className="p-4 rounded-lg bg-[#2a2a4a] border border-[#4a4a6a]">
+        <FilterModal
+          activeFilter={activeFilter}
+          onFilterChange={setActiveFilter}
+          onClose={() => console.log("Cerrar filtros")}
+        />
       </div>
     </div>
   )
