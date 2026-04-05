@@ -6,6 +6,7 @@ import SearchBar from "./molecules/SearchBar"
 import IconButton from "./molecules/IconButton"
 import TaskItem from "./molecules/TaskItem"
 import FormField from "./molecules/FormField"
+import FilterChip from "./molecules/FilterChip"
 
 function App() {
   const [darkMode, setDarkMode] = useState(false)
@@ -13,6 +14,8 @@ function App() {
 
   const [title, setTitle] = useState("")
   const [date, setDate] = useState("")
+
+  const [activeFilter, setActiveFilter] = useState("all")
 
   const [tasks, setTasks] = useState([
     { id: 1, title: "Entregar proyecto", dueDate: "2024-04-03", completed: false },
@@ -119,6 +122,20 @@ function App() {
             focus:border-[#7B2FBE]
           "
         />
+      </div>
+
+      <Text variant="h2" className="text-[#e0e0e0]">FilterChip</Text>
+      <div className="flex gap-2 flex-wrap">
+        {["all", "pending", "completed", "overdue"].map(filter => (
+          <FilterChip
+            key={filter}
+            label={{ all: "Todas", pending: "Pendientes", completed: "Completadas", overdue: "Vencidas" }[filter]}
+            active={activeFilter === filter}
+            onClick={() => setActiveFilter(filter)}
+            activeClassName="bg-[#7B2FBE] text-white"
+            inactiveClassName="bg-[#2a2a4a] text-[#6a6a9a] border border-[#4a4a6a] hover:border-[#7B2FBE]"
+          />
+        ))}
       </div>
     </div>
   )
