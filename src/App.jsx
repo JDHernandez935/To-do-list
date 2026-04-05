@@ -8,6 +8,8 @@ import FilterChip from "./molecules/FilterChip"
 import Text from "./atoms/Text"
 import AlertContainer from "./organism/AlertContainer"
 import useAlerts from "./hooks/useAlerts"
+import ModalTemplate from "./templates/ModalTemplate"
+import TaskForm from "./organism/TaskForm"
 
 function App() {
   const [activeTab, setActiveTab] = useState("home")
@@ -15,6 +17,7 @@ function App() {
   const [activeFilter, setActiveFilter] = useState("all")
   const [showFilters, setShowFilters] = useState(false)
   const { alerts, success, removeAlert } = useAlerts()
+  const [showModal, setShowModal] = useState(false)
 
   const [tasks, setTasks] = useState([
     { id: 1, title: "Entregar proyecto", dueDate: "2024-04-09", completed: false },
@@ -34,7 +37,7 @@ function App() {
     <IconButton
       iconName="Plus"
       size={24}
-      onClick={() => success("Abrir formulario")}
+      onClick= {() => setShowModal(true)}
       className="
         w-14 h-14 rounded-full
         bg-[#7B2FBE] text-white
@@ -99,6 +102,19 @@ function App() {
         </Text>
         <TaskList tasks={tasks} onToggle={handleToggle} />
       </MainTemplate>
+      {showModal && (
+        <ModalTemplate onClose={() => setShowModal(false)}>
+          <TaskForm
+            mode="create"
+            onSubmit={(data) => {
+              console.log(data)
+              setShowModal(false)
+              success("Tarea creada correctamente")
+            }}
+            onCancel={() => setShowModal(false)}
+          />
+        </ModalTemplate>
+      )}
     </>
   )
 }
