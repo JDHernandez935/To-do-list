@@ -4,10 +4,29 @@ import Text from "./atoms/Text"
 import Toggle from "./molecules/Toggle"
 import SearchBar from "./molecules/SearchBar"
 import IconButton from "./molecules/IconButton"
+import TaskItem from "./molecules/TaskItem"
+import FormField from "./molecules/FormField"
 
 function App() {
   const [darkMode, setDarkMode] = useState(false)
   const [search, setSearch] = useState("")
+
+  const [title, setTitle] = useState("")
+  const [date, setDate] = useState("")
+
+  const [tasks, setTasks] = useState([
+    { id: 1, title: "Entregar proyecto", dueDate: "2024-04-03", completed: false },
+    { id: 2, title: "Estudiar React", dueDate: "2024-04-04", completed: false },
+    { id: 3, title: "Hacer ejercicio", dueDate: "2024-04-10", completed: false },
+    { id: 4, title: "Llamar al médico", dueDate: null, completed: false },
+    { id: 5, title: "Comprar víveres", dueDate: "2024-04-01", completed: true },
+  ])
+
+  const handleToggle = (id) => {
+    setTasks(tasks.map(task =>
+      task.id === id ? { ...task, completed: !task.completed } : task
+    ))
+  }
 
   return (
     <div className="p-8 flex flex-col gap-6 bg-[#1a1a2e] min-h-screen">
@@ -58,7 +77,48 @@ function App() {
           iconClassName="text-white"
           size={24}
         />
+      </div>
 
+      <div className="p-8 flex flex-col gap-3 bg-[#1a1a2e] min-h-screen">
+        <Text variant="h2" className="text-[#e0e0e0] mb-4">Tareas</Text>
+        {tasks.map(task => (
+          <TaskItem
+            key={task.id}
+            task={task}
+            onToggle={handleToggle}
+            className="
+              px-4 py-3 rounded-lg
+              bg-[#2a2a4a] border border-[#4a4a6a]
+            "
+          />
+        ))}
+      </div>
+
+      <Text variant="h2" className="text-[#e0e0e0]">FormField</Text>
+      <div className="flex flex-col gap-4 p-4 rounded-lg bg-[#2a2a4a]">
+        <FormField
+          label="Nombre de la tarea"
+          placeholder="Ej: Estudiar React..."
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+          inputClassName="
+            bg-[#1a1a2e] border-[#4a4a6a]
+            text-[#e0e0e0] placeholder-[#6a6a9a]
+            focus:border-[#7B2FBE]
+          "
+        />
+        <FormField
+          label="Fecha límite"
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+          inputClassName="
+            bg-[#1a1a2e] border-[#4a4a6a]
+            text-[#e0e0e0]
+            focus:border-[#7B2FBE]
+          "
+        />
       </div>
     </div>
   )
