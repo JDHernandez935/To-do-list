@@ -5,10 +5,15 @@ import TaskList from "./organism/TaskList"
 import Navbar from "./organism/NavBar"
 import TaskForm from "./organism/TaskForm"
 import FilterModal from "./organism/FilterModal"
+import DeleteModal from "./organism/DeleteModal"
+import AlertContainer from "./organism/AlertContainer"
+import Button from "./atoms/Button"
+import useAlerts from "./hooks/useAlerts"
 
 function App() {
   const [activeTab, setActiveTab] = useState("home")
   const [activeFilter, setActiveFilter] = useState("all")
+  const { alerts, success, error, warning, info, removeAlert } = useAlerts()
 
   const [tasks, setTasks] = useState([
     { id: 1, title: "Entregar proyecto", dueDate: "2024-04-09", completed: false },
@@ -50,6 +55,42 @@ function App() {
           onFilterChange={setActiveFilter}
           onClose={() => console.log("Cerrar filtros")}
         />
+      </div>
+
+      <div className="p-4 rounded-lg bg-[#2a2a4a] border border-[#4a4a6a]">
+        <DeleteModal
+          taskTitle="Entregar proyecto final"
+          onConfirm={() => console.log("Eliminado")}
+          onCancel={() => console.log("Cancelado")}
+        />
+      </div>
+
+      <AlertContainer alerts={alerts} onClose={removeAlert} />
+      <div className="flex gap-2 flex-wrap">
+        <Button
+          onClick={() => success("Tarea creada correctamente")}
+          className="px-4 py-2 rounded-lg bg-green-600 text-white active:scale-95 transition-all"
+        >
+          Éxito
+        </Button>
+        <Button
+          onClick={() => error("Ha ocurrido un error")}
+          className="px-4 py-2 rounded-lg bg-red-500 text-white active:scale-95 transition-all"
+        >
+          Error
+        </Button>
+        <Button
+          onClick={() => warning("Esta acción no se puede deshacer")}
+          className="px-4 py-2 rounded-lg bg-yellow-500 text-white active:scale-95 transition-all"
+        >
+          Advertencia
+        </Button>
+        <Button
+          onClick={() => info("Tarea actualizada")}
+          className="px-4 py-2 rounded-lg bg-blue-500 text-white active:scale-95 transition-all"
+        >
+          Info
+        </Button>
       </div>
     </div>
   )
