@@ -4,7 +4,6 @@ import Text from "../atoms/Text"
 function Navbar({ activeTab, onTabChange, className = "" }) {
   const tabs = [
     { id: "home", icon: "CheckSquare", label: "Tareas" },
-    { id: "search", icon: "Search", label: "Buscar" },
     { id: "calendar", icon: "Calendar", label: "Calendario" },
     { id: "trash", icon: "Trash2", label: "Papelera" },
   ]
