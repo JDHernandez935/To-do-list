@@ -1,8 +1,10 @@
 import Button from "./atoms/Button"
+import Input from "./atoms/Input"
 
 function App() {
   return (
     <div className="p-8 flex flex-col gap-4">
+      <Input placeholder="Una tarea" />
       <Button variant="primary">Botón primario</Button>
       <Button variant="secondary">Botón secundario</Button>
       <Button variant="danger">Botón peligro</Button>
