@@ -1,5 +1,6 @@
 import Button from "./atoms/Button"
 import Input from "./atoms/Input"
+import Badge from "./atoms/Badge"
 
 function App() {
   return (
@@ -9,6 +10,13 @@ function App() {
       <Button variant="secondary">Botón secundario</Button>
       <Button variant="danger">Botón peligro</Button>
       <Button variant="ghost">Botón ghost</Button>
+
+      <div className="flex gap-2">
+        <Badge label="Hoy" variant="today" />
+        <Badge label="Mañana" variant="tomorrow" />
+        <Badge label="Vencida" variant="overdue" />
+        <Badge label="Completada" variant="completed" />
+      </div>
     </div>
   )
 }
