@@ -5,6 +5,7 @@ import EditTaskPage from "./pages/EditTaskPage"
 import DeleteTaskPage from "./pages/DeleteTaskPage"
 import DetailTaskPage from "./pages/DetailTaskPage"
 import TrashPage from "./pages/TrashPage"
+import CalendarPage from "./pages/CalendarPage"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="task/:id/delete" element={<DeleteTaskPage />} />
       </Route>
       <Route path="/trash" element={<TrashPage />} />
+      <Route path="/calendar" element={<CalendarPage />} />
     </Routes>
   )
 }
