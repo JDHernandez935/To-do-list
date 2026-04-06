@@ -24,6 +24,18 @@ export function TaskProvider({ children }) {
     localStorage.setItem("deletedTasks", JSON.stringify(deletedTasks))
   }, [deletedTasks])
 
+  useEffect(() => {
+    const now = new Date()
+    const filtered = deletedTasks.filter(task => {
+      const deleted = new Date(task.deletedAt)
+      const diff = Math.ceil((now - deleted) / (1000 * 60 * 60 * 24))
+      return diff <= 10
+    })
+    if (filtered.length !== deletedTasks.length) {
+      setDeletedTasks(filtered)
+    }
+  }, [])
+
   const addTask = (data) => {
     const newTask = {
       id: Date.now(),
