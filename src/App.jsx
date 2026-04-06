@@ -1,43 +1,43 @@
 import { useState } from "react"
 import MainTemplate from "./templates/MainTemplate"
 import TaskList from "./organism/TaskList"
-import FilterModal from "./organism/FilterModal"
 import IconButton from "./molecules/IconButton"
 import SearchBar from "./molecules/SearchBar"
 import FilterChip from "./molecules/FilterChip"
 import Text from "./atoms/Text"
 import AlertContainer from "./organism/AlertContainer"
-import useAlerts from "./hooks/useAlerts"
 import ModalTemplate from "./templates/ModalTemplate"
 import TaskForm from "./organism/TaskForm"
+import useAlerts from "./hooks/useAlerts"
+import { useTasks } from "./hooks/useTasks"
 
 function App() {
   const [activeTab, setActiveTab] = useState("home")
-  const [search, setSearch] = useState("")
-  const [activeFilter, setActiveFilter] = useState("all")
   const [showFilters, setShowFilters] = useState(false)
-  const { alerts, success, removeAlert } = useAlerts()
   const [showModal, setShowModal] = useState(false)
+  const { alerts, success, removeAlert } = useAlerts()
 
-  const [tasks, setTasks] = useState([
-    { id: 1, title: "Entregar proyecto", dueDate: "2024-04-09", completed: false },
-    { id: 2, title: "Estudiar React", dueDate: "2024-04-04", completed: false },
-    { id: 3, title: "Hacer ejercicio", dueDate: "2024-04-10", completed: false },
-    { id: 4, title: "Llamar al médico", dueDate: null, completed: false },
-  ])
+  const {
+    filteredTasks,
+    activeFilter,
+    setActiveFilter,
+    search,
+    setSearch,
+    addTask,
+    toggleTask,
+  } = useTasks()
 
-  const handleToggle = (id) => {
-    setTasks(tasks.map(task =>
-      task.id === id ? { ...task, completed: !task.completed } : task
-    ))
-    success("Tarea actualizada")
+  const handleSubmit = (data) => {
+    addTask(data)
+    setShowModal(false)
+    success("Tarea creada correctamente")
   }
 
   const fab = (
     <IconButton
       iconName="Plus"
       size={24}
-      onClick= {() => setShowModal(true)}
+      onClick={() => setShowModal(true)}
       className="
         w-14 h-14 rounded-full
         bg-[#7B2FBE] text-white
@@ -57,7 +57,6 @@ function App() {
         onTabChange={setActiveTab}
         fab={fab}
       >
-
         <div className="flex gap-2 mb-3">
           <SearchBar
             value={search}
@@ -88,7 +87,14 @@ function App() {
             {["all", "pending", "completed", "overdue", "today", "soon"].map(filter => (
               <FilterChip
                 key={filter}
-                label={{ all: "Todas", pending: "Pendientes", completed: "Completadas", overdue: "Vencidas", today: "Hoy", soon: "Próximas" }[filter]}
+                label={{
+                  all: "Todas",
+                  pending: "Pendientes",
+                  completed: "Completadas",
+                  overdue: "Vencidas",
+                  today: "Hoy",
+                  soon: "Próximas"
+                }[filter]}
                 active={activeFilter === filter}
                 onClick={() => setActiveFilter(filter)}
                 activeClassName="bg-[#7B2FBE] text-white"
@@ -97,20 +103,20 @@ function App() {
             ))}
           </div>
         )}
+
         <Text variant="h2" className="text-[#e0e0e0] mb-4">
-          {tasks.filter(t => !t.completed).length} tareas pendientes
+          {filteredTasks.filter(t => !t.completed).length} tareas pendientes
         </Text>
-        <TaskList tasks={tasks} onToggle={handleToggle} />
+
+        <TaskList tasks={filteredTasks} onToggle={toggleTask} />
+
       </MainTemplate>
+
       {showModal && (
         <ModalTemplate onClose={() => setShowModal(false)}>
           <TaskForm
             mode="create"
-            onSubmit={(data) => {
-              console.log(data)
-              setShowModal(false)
-              success("Tarea creada correctamente")
-            }}
+            onSubmit={handleSubmit}
             onCancel={() => setShowModal(false)}
           />
         </ModalTemplate>
