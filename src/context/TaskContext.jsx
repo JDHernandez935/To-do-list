@@ -13,7 +13,14 @@ export function TaskProvider({ children }) {
     return saved ? JSON.parse(saved) : []
   })
 
-  const [activeFilter, setActiveFilter] = useState("all")
+  const [filters, setFilters] = useState({
+    status: "all",
+    priority: "all",
+    dateFrom: "",
+    dateTo: "",
+    timeOfDay: "all",
+  })
+
   const [search, setSearch] = useState("")
 
   useEffect(() => {
@@ -43,6 +50,7 @@ export function TaskProvider({ children }) {
       description: data.description || "",
       dueDate: data.dueDate || null,
       dueTime: data.dueTime || null,
+      priority: data.priority || "none",
       completed: false,
       createdAt: new Date().toISOString(),
     }
@@ -89,28 +97,66 @@ export function TaskProvider({ children }) {
   const filteredTasks = tasks.filter(task => {
     const matchesSearch = task.title.toLowerCase().includes(search.toLowerCase())
     if (!matchesSearch) return false
-    if (activeFilter === "all") return true
-    if (activeFilter === "pending") return !task.completed
-    if (activeFilter === "completed") return task.completed
-    if (!task.dueDate) return false
+
+    if (filters.status === "pending" && task.completed) return false
+    if (filters.status === "completed" && !task.completed) return false
+
+    if (filters.priority !== "all" && task.priority !== filters.priority) return false
+
     const today = new Date()
-    const due = new Date(task.dueDate)
     today.setHours(0, 0, 0, 0)
-    due.setHours(0, 0, 0, 0)
-    const diff = Math.ceil((due - today) / (1000 * 60 * 60 * 24))
-    if (activeFilter === "overdue") return diff < 0 && !task.completed
-    if (activeFilter === "today") return diff === 0
-    if (activeFilter === "soon") return diff > 0 && diff <= 3
+
+    if (filters.status === "overdue") {
+      if (!task.dueDate) return false
+      const due = new Date(task.dueDate)
+      due.setHours(0, 0, 0, 0)
+      if (due >= today || task.completed) return false
+    }
+
+    if (filters.status === "today") {
+      if (!task.dueDate) return false
+      const due = new Date(task.dueDate)
+      due.setHours(0, 0, 0, 0)
+      if (due.getTime() !== today.getTime()) return false
+    }
+
+    if (filters.status === "soon") {
+      if (!task.dueDate) return false
+      const due = new Date(task.dueDate)
+      due.setHours(0, 0, 0, 0)
+      const diff = Math.ceil((due - today) / (1000 * 60 * 60 * 24))
+      if (diff <= 0 || diff > 3) return false
+    }
+
+    if (filters.dateFrom && task.dueDate) {
+      if (new Date(task.dueDate) < new Date(filters.dateFrom)) return false
+    }
+
+    if (filters.dateTo && task.dueDate) {
+      if (new Date(task.dueDate) > new Date(filters.dateTo)) return false
+    }
+
+    if (filters.timeOfDay !== "all" && task.dueTime) {
+      const hour = parseInt(task.dueTime.split(":")[0])
+      if (filters.timeOfDay === "morning" && !(hour >= 6 && hour < 12)) return false
+      if (filters.timeOfDay === "afternoon" && !(hour >= 12 && hour < 18)) return false
+      if (filters.timeOfDay === "night" && !(hour >= 18 || hour < 6)) return false
+    }
+
     return true
   })
+
+  const activeFilter = filters.status
 
   return (
     <TaskContext.Provider value={{
       tasks,
       filteredTasks,
       deletedTasks,
+      filters,
+      setFilters,
       activeFilter,
-      setActiveFilter,
+      setActiveFilter: (status) => setFilters(prev => ({ ...prev, status })),
       search,
       setSearch,
       addTask,

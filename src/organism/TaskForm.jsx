@@ -9,6 +9,7 @@ function TaskForm({ mode = "create", task = null, onSubmit, onCancel }) {
     description: task?.description || "",
     dueDate: task?.dueDate || "",
     dueTime: task?.dueTime || "",
+    priority: task?.priority || "none",
   })
 
   const isReadOnly = mode === "readonly"
@@ -46,6 +47,13 @@ function TaskForm({ mode = "create", task = null, onSubmit, onCancel }) {
   }
 
   const inputWithIcon = { ...inputBase, paddingLeft: "36px" }
+
+  const priorities = [
+    { id: "none", label: "Ninguna", bg: "#233240", color: "#77848C" },
+    { id: "low", label: "Baja", bg: "#14532d", color: "#4ade80" },
+    { id: "medium", label: "Media", bg: "#854d0e", color: "#facc15" },
+    { id: "high", label: "Alta", bg: "#4a1515", color: "#ff6b6b" },
+  ]
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "20px", padding: "20px" }}>
@@ -108,6 +116,32 @@ function TaskForm({ mode = "create", task = null, onSubmit, onCancel }) {
               onFocus={e => e.target.style.borderColor = "#7B2FBE"}
               onBlur={e => e.target.style.borderColor = "#364C59"}
             />
+          </div>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+          <span style={{ color: "#77848C", fontSize: 12, display: "flex", alignItems: "center", gap: 6 }}>
+            <Icon name="Flag" size={12} color="#77848C" />
+            Prioridad
+          </span>
+          <div style={{ display: "flex", gap: 8 }}>
+            {priorities.map(p => (
+              <button
+                key={p.id}
+                onClick={() => setForm(prev => ({ ...prev, priority: p.id }))}
+                style={{
+                  flex: 1, padding: "6px 0", borderRadius: 8, cursor: "pointer",
+                  fontSize: 12, fontWeight: 500, border: "none",
+                  background: form.priority === p.id ? p.bg : "#233240",
+                  color: form.priority === p.id ? p.color : "#77848C",
+                  outline: form.priority === p.id ? `1px solid ${p.color}` : "none",
+                  opacity: isReadOnly ? 0.6 : 1,
+                  pointerEvents: isReadOnly ? "none" : "auto",
+                }}
+              >
+                {p.label}
+              </button>
+            ))}
           </div>
         </div>
 

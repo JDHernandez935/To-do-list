@@ -1,90 +1,244 @@
+import { useState } from "react"
+import { useTasks } from "../hooks/useTasks"
 import IconButton from "../molecules/IconButton"
-import Text from "../atoms/Text"
 import Icon from "../atoms/Icon"
+import Button from "../atoms/Button"
 
-function FilterModal({ activeFilter, onFilterChange, onClose, className = "" }) {
-  const filters = [
-    { id: "all", label: "Todas", icon: "LayoutGrid" },
-    { id: "pending", label: "Pendientes", icon: "Clock" },
-    { id: "completed", label: "Completadas", icon: "CheckCircle" },
-    { id: "overdue", label: "Vencidas", icon: "AlertTriangle" },
-    { id: "today", label: "Hoy", icon: "CalendarCheck" },
-    { id: "soon", label: "Próximas", icon: "CalendarClock" },
+function FilterModal({ onClose, className = "" }) {
+  const { filters, setFilters } = useTasks()
+  const [local, setLocal] = useState({ ...filters })
+
+  const update = (key, value) => {
+    setLocal(prev => ({ ...prev, [key]: value }))
+  }
+
+  const apply = () => {
+    setFilters(local)
+    onClose()
+  }
+
+  const clear = () => {
+    const reset = { status: "all", priority: "all", dateFrom: "", dateTo: "", timeOfDay: "all" }
+    setLocal(reset)
+    setFilters(reset)
+    onClose()
+  }
+
+  const statusOptions = [
+    { id: "all", label: "Todas", icon: "LayoutGrid", color: "#77848C" },
+    { id: "pending", label: "Pendientes", icon: "Clock", color: "#facc15" },
+    { id: "completed", label: "Completadas", icon: "CheckCircle", color: "#4ade80" },
+    { id: "overdue", label: "Vencidas", icon: "AlertTriangle", color: "#ff6b6b" },
+    { id: "today", label: "Hoy", icon: "CalendarCheck", color: "#7B2FBE" },
+    { id: "soon", label: "Próximas", icon: "CalendarClock", color: "#60a5fa" },
   ]
 
+  const priorityOptions = [
+    { id: "all", label: "Todas", color: "#77848C", bg: "#364C59" },
+    { id: "high", label: "Alta", color: "#fff", bg: "#ff6b6b" },
+    { id: "medium", label: "Media", color: "#fff", bg: "#BA7517" },
+    { id: "low", label: "Baja", color: "#fff", bg: "#14532d" },
+  ]
+
+  const timeOptions = [
+    { id: "all", label: "Cualquiera", icon: "Clock" },
+    { id: "morning", label: "Mañana", icon: "Sunrise" },
+    { id: "afternoon", label: "Tarde", icon: "Sun" },
+    { id: "night", label: "Noche", icon: "Moon" },
+  ]
+
+  const inputStyle = {
+    background: "#00010D",
+    border: "1px solid #364C59",
+    color: "#C7D4D9",
+    borderRadius: "8px",
+    padding: "6px 10px",
+    fontSize: "13px",
+    outline: "none",
+    width: "100%",
+  }
+
   return (
-    <div className={`flex flex-col gap-3 px-4 ${className}`}>
+    <div className={`flex flex-col ${className}`} style={{ maxHeight: "80vh" }}>
 
-      <div className="flex items-center justify-between mb-1">
-        <div className="flex items-center gap-2">
-          <Icon name="SlidersHorizontal" size={18} color="#7B2FBE" />
-          <Text variant="h3" style={{ color: "#C7D4D9", fontWeight: 600 }}>
-            Filtrar tareas
-          </Text>
+      <div style={{ padding: "16px 16px 12px", flexShrink: 0 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <Icon name="SlidersHorizontal" size={18} color="#7B2FBE" />
+            <span style={{ color: "#C7D4D9", fontWeight: 600, fontSize: 16 }}>Filtrar tareas</span>
+          </div>
+          <IconButton
+            iconName="X"
+            onClick={onClose}
+            className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-70 transition-opacity"
+            style={{ background: "#364C59" }}
+            iconClassName="text-[#C7D4D9]"
+          />
         </div>
-        <IconButton
-          iconName="X"
-          onClick={onClose}
-          className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-70 transition-opacity"
-          style={{ background: "#364C59" }}
-          iconClassName="text-[#C7D4D9]"
-        />
+        <span style={{ color: "#77848C", fontSize: 12 }}>
+          Ajusta los criterios de búsqueda
+        </span>
       </div>
 
-      <div
-        className="flex items-center justify-between py-2"
-        style={{ borderBottom: "1px solid #364C59", borderTop: "1px solid #364C59" }}
-      >
-        <button
-          onClick={() => onFilterChange("all")}
-          className="flex items-center gap-1 cursor-pointer hover:opacity-70 transition-opacity"
-          style={{ color: "#7B2FBE", fontSize: 12, fontWeight: 500 }}
-        >
-          <Icon name="CheckCheck" size={13} color="#7B2FBE" />
-          Seleccionar todo
-        </button>
-        <button
-          onClick={() => onFilterChange("all")}
-          className="flex items-center gap-1 cursor-pointer hover:opacity-70 transition-opacity"
-          style={{ color: "#77848C", fontSize: 12 }}
-        >
-          <Icon name="X" size={13} color="#77848C" />
-          Limpiar
-        </button>
-      </div>
+      <div style={{ overflowY: "auto", flex: 1, padding: "0 16px", display: "flex", flexDirection: "column", gap: 16 }}>
 
-      <div className="flex flex-col gap-1">
-        {filters.map(filter => {
-          const isActive = activeFilter === filter.id
-          return (
-            <button
-              key={filter.id}
-              onClick={() => onFilterChange(filter.id)}
-              className="flex items-center gap-3 px-3 py-2 rounded-xl cursor-pointer transition-all duration-150 text-left"
-              style={{
-                background: isActive ? "#364C59" : "transparent",
-                borderLeft: isActive ? "3px solid #7B2FBE" : "3px solid transparent",
-              }}
-            >
-              <Icon
-                name={filter.icon}
-                size={16}
-                color={isActive ? "#7B2FBE" : "#77848C"}
+        <div style={{ borderTop: "1px solid #364C59", paddingTop: 12 }}>
+          <span style={{ color: "#77848C", fontSize: 12, fontWeight: 500, display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+            <Icon name="Tag" size={12} color="#77848C" />
+            Estado
+          </span>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+            {statusOptions.map(opt => {
+              const isActive = local.status === opt.id
+              return (
+                <button
+                  key={opt.id}
+                  onClick={() => update("status", opt.id)}
+                  style={{
+                    display: "flex", alignItems: "center", gap: 8,
+                    padding: "8px 12px", borderRadius: 10, cursor: "pointer",
+                    background: isActive ? "#364C59" : "#233240",
+                    border: isActive ? `1px solid ${opt.color}` : "1px solid #364C59",
+                    transition: "all 0.15s",
+                  }}
+                >
+                  <Icon name={opt.icon} size={14} color={isActive ? opt.color : "#77848C"} />
+                  <span style={{ color: isActive ? "#C7D4D9" : "#77848C", fontSize: 13, fontWeight: isActive ? 500 : 400 }}>
+                    {opt.label}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        <div style={{ borderTop: "1px solid #364C59", paddingTop: 12 }}>
+          <span style={{ color: "#77848C", fontSize: 12, fontWeight: 500, display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+            <Icon name="Calendar" size={12} color="#77848C" />
+            Fecha
+          </span>
+          <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
+            {["today", "soon"].map(shortcut => {
+              const labels = { today: "Hoy", soon: "Esta semana" }
+              const isActive = local.status === shortcut
+              return (
+                <button
+                  key={shortcut}
+                  onClick={() => update("status", shortcut)}
+                  style={{
+                    padding: "4px 12px", borderRadius: 20, cursor: "pointer", fontSize: 12,
+                    background: isActive ? "#7B2FBE" : "#233240",
+                    color: isActive ? "#fff" : "#77848C",
+                    border: isActive ? "1px solid #7B2FBE" : "1px solid #364C59",
+                  }}
+                >
+                  {labels[shortcut]}
+                </button>
+              )
+            })}
+          </div>
+          <div style={{ display: "flex", gap: 8 }}>
+            <div style={{ flex: 1 }}>
+              <span style={{ color: "#77848C", fontSize: 11, display: "block", marginBottom: 4 }}>Desde</span>
+              <input
+                type="date"
+                value={local.dateFrom}
+                onChange={e => update("dateFrom", e.target.value)}
+                onClick={e => e.target.showPicker()}
+                style={inputStyle}
+                onFocus={e => e.target.style.borderColor = "#7B2FBE"}
+                onBlur={e => e.target.style.borderColor = "#364C59"}
               />
-              <Text
-                variant="small"
-                className="flex-1 font-medium"
-                style={{ color: isActive ? "#C7D4D9" : "#77848C" }}
-              >
-                {filter.label}
-              </Text>
-              {isActive && (
-                <Icon name="Check" size={14} color="#7B2FBE" />
-              )}
-            </button>
-          )
-        })}
+            </div>
+            <div style={{ flex: 1 }}>
+              <span style={{ color: "#77848C", fontSize: 11, display: "block", marginBottom: 4 }}>Hasta</span>
+              <input
+                type="date"
+                value={local.dateTo}
+                onChange={e => update("dateTo", e.target.value)}
+                onClick={e => e.target.showPicker()}
+                style={inputStyle}
+                onFocus={e => e.target.style.borderColor = "#7B2FBE"}
+                onBlur={e => e.target.style.borderColor = "#364C59"}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div style={{ borderTop: "1px solid #364C59", paddingTop: 12 }}>
+          <span style={{ color: "#77848C", fontSize: 12, fontWeight: 500, display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+            <Icon name="Clock" size={12} color="#77848C" />
+            Hora del día
+          </span>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {timeOptions.map(opt => {
+              const isActive = local.timeOfDay === opt.id
+              return (
+                <button
+                  key={opt.id}
+                  onClick={() => update("timeOfDay", opt.id)}
+                  style={{
+                    display: "flex", alignItems: "center", gap: 6,
+                    padding: "6px 12px", borderRadius: 20, cursor: "pointer", fontSize: 12,
+                    background: isActive ? "#364C59" : "#233240",
+                    color: isActive ? "#C7D4D9" : "#77848C",
+                    border: isActive ? "1px solid #7B2FBE" : "1px solid #364C59",
+                  }}
+                >
+                  <Icon name={opt.icon} size={13} color={isActive ? "#7B2FBE" : "#77848C"} />
+                  {opt.label}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        <div style={{ borderTop: "1px solid #364C59", paddingTop: 12, paddingBottom: 12 }}>
+          <span style={{ color: "#77848C", fontSize: 12, fontWeight: 500, display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+            <Icon name="Flag" size={12} color="#77848C" />
+            Prioridad
+          </span>
+          <div style={{ display: "flex", gap: 8 }}>
+            {priorityOptions.map(opt => {
+              const isActive = local.priority === opt.id
+              return (
+                <button
+                  key={opt.id}
+                  onClick={() => update("priority", opt.id)}
+                  style={{
+                    flex: 1, padding: "6px 0", borderRadius: 20, cursor: "pointer",
+                    fontSize: 12, fontWeight: 500,
+                    background: isActive ? opt.bg : "#233240",
+                    color: isActive ? opt.color : "#77848C",
+                    border: isActive ? `1px solid ${opt.bg}` : "1px solid #364C59",
+                  }}
+                >
+                  {opt.label}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
       </div>
+
+      <div style={{ padding: "12px 16px", flexShrink: 0, borderTop: "1px solid #364C59", display: "flex", gap: 8 }}>
+        <Button
+          onClick={clear}
+          className="flex-1 py-2 rounded-xl font-medium active:scale-95 transition-all duration-150"
+          style={{ background: "#233240", color: "#77848C", border: "1px solid #364C59" }}
+        >
+          Limpiar
+        </Button>
+        <Button
+          onClick={apply}
+          className="flex-1 py-2 rounded-xl font-medium active:scale-95 transition-all duration-150"
+          style={{ background: "#7B2FBE", color: "#fff" }}
+        >
+          Aplicar filtros
+        </Button>
+      </div>
+
     </div>
   )
 }
