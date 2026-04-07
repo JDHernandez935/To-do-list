@@ -3,13 +3,12 @@ import { useTasks } from "../hooks/useTasks"
 import useAlerts from "../hooks/useAlerts"
 import ModalTemplate from "../templates/ModalTemplate"
 import TaskForm from "../organism/TaskForm"
-import AlertContainer from "../organism/AlertContainer"
 
 function EditTaskPage() {
   const navigate = useNavigate()
   const { id } = useParams()
   const { tasks, editTask } = useTasks()
-  const { alerts, success, removeAlert } = useAlerts()
+  const { success } = useAlerts()
 
   const task = tasks.find(t => t.id === Number(id))
 
@@ -25,18 +24,15 @@ function EditTaskPage() {
   }
 
   return (
-    <>
-      <AlertContainer alerts={alerts} onClose={removeAlert} />
-      <ModalTemplate onClose={() => navigate(-1)}>
-        <TaskForm
-          mode="edit"
-          task={task}
-          onSubmit={handleSubmit}
-          onCancel={() => navigate(-1)}
-          onDelete={() => navigate(`/task/${id}/delete`)}
-        />
-      </ModalTemplate>
-    </>
+    <ModalTemplate onClose={() => navigate(-1)}>
+      <TaskForm
+        mode="edit"
+        task={task}
+        onSubmit={handleSubmit}
+        onCancel={() => navigate(-1)}
+        onDelete={() => navigate(`/task/${id}/delete`)}
+      />
+    </ModalTemplate>
   )
 }
 

@@ -1,10 +1,7 @@
 import { useState } from "react"
-import FormField from "../molecules/FormField"
-import IconButton from "../molecules/IconButton"
-import Button from "../atoms/Button"
-import Text from "../atoms/Text"
+import Icon from "../atoms/Icon"
 
-function TaskForm({ mode = "create", task = null, onSubmit, onCancel, onDelete, className = "" }) {
+function TaskForm({ mode = "create", task = null, onSubmit, onCancel }) {
   const [form, setForm] = useState({
     title: task?.title || "",
     description: task?.description || "",
@@ -24,103 +21,159 @@ function TaskForm({ mode = "create", task = null, onSubmit, onCancel, onDelete, 
     onSubmit(form)
   }
 
+  const modeConfig = {
+    create: { icon: "Plus", title: "Nueva tarea", color: "#7B2FBE" },
+    edit: { icon: "Pencil", title: "Editar tarea", color: "#7B2FBE" },
+    readonly: { icon: "Eye", title: task?.title || "Detalle", color: "#364C59" },
+  }
+
+  const config = modeConfig[mode]
+
+  const inputBase = {
+    background: "#00010D",
+    border: "1px solid #364C59",
+    color: "#C7D4D9",
+    borderRadius: "8px",
+    padding: "8px 12px",
+    width: "100%",
+    outline: "none",
+    fontSize: "14px",
+    transition: "border-color 0.2s",
+    opacity: isReadOnly ? 0.6 : 1,
+    pointerEvents: isReadOnly ? "none" : "auto",
+  }
+
+  const inputWithIcon = {
+    ...inputBase,
+    paddingLeft: "36px",
+  }
+
   return (
-    <div className={`flex flex-col gap-5 ${className}`}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "20px", padding: "20px" }}>
 
-      <div className="flex items-center justify-between">
-        <Text variant="h3" className="text-[#C7D4D9]">
-          {mode === "create" ? "Nueva tarea" : mode === "edit" ? "Editar tarea" : form.title}
-        </Text>
-        <IconButton
-          iconName="X"
-          onClick={onCancel}
-          className="w-8 h-8 rounded-full bg-[#364C59] hover:bg-[#77848C]"
-          iconClassName="text-[#C7D4D9]"
-        />
+      <div style={{ display: "flex", alignItems: "center", paddingBottom: "16px", borderBottom: "1px solid #364C59" }}>
+        <div style={{ width: 32, height: 32, borderRadius: 8, background: config.color, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginRight: 12 }}>
+          <Icon name={config.icon} size={15} color="#fff" />
+        </div>
+        <span style={{ color: "#C7D4D9", fontWeight: 600, fontSize: 18, flex: 1 }}>
+          {config.title}
+        </span>
+        <button onClick={onCancel} style={{ width: 32, height: 32, borderRadius: "50%", background: "#364C59", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", border: "none", flexShrink: 0 }}>
+          <Icon name="X" size={14} color="#C7D4D9" />
+        </button>
       </div>
 
-      <FormField
-        label="Nombre"
-        placeholder="¿Qué necesitas hacer?"
-        value={form.title}
-        onChange={handleChange("title")}
-        required
-        inputClassName={`
-          bg-[#00010D] border-[#364C59]
-          text-[#C7D4D9] placeholder-[#77848C]
-          focus:border-[#7B2FBE]
-          ${isReadOnly ? "pointer-events-none opacity-70" : ""}
-        `}
-      />
+      <span style={{ color: "#77848C", fontSize: 13 }}>
+        Organiza tu día de forma eficiente
+      </span>
 
-      <FormField
-        label="Descripción"
-        placeholder="Detalles opcionales..."
-        value={form.description}
-        onChange={handleChange("description")}
-        inputClassName={`
-          bg-[#00010D] border-[#364C59]
-          text-[#C7D4D9] placeholder-[#77848C]
-          focus:border-[#7B2FBE]
-          ${isReadOnly ? "pointer-events-none opacity-70" : ""}
-        `}
-      />
+      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
 
-      <div className="flex gap-3">
-        <FormField
-          label="Fecha límite"
-          type="date"
-          value={form.dueDate}
-          onChange={handleChange("dueDate")}
-          className="flex-1"
-          inputClassName={`
-            bg-[#00010D] border-[#364C59]
-            text-[#C7D4D9]
-            focus:border-[#7B2FBE]
-            ${isReadOnly ? "pointer-events-none opacity-70" : ""}
-          `}
-        />
-        <FormField
-          label="Hora"
-          type="time"
-          value={form.dueTime}
-          onChange={handleChange("dueTime")}
-          className="flex-1"
-          inputClassName={`
-            bg-[#00010D] border-[#364C59]
-            text-[#C7D4D9]
-            focus:border-[#7B2FBE]
-            ${isReadOnly ? "pointer-events-none opacity-70" : ""}
-          `}
-        />
-      </div>
-
-      {!isReadOnly && (
-        <div className="flex gap-3 pt-2">
-          <Button
-            onClick={handleSubmit}
-            className="
-              flex-1 py-2 rounded-lg font-medium
-              bg-[#7B2FBE] text-white
-              hover:bg-[#9B4FDE]
-              active:scale-95 transition-all duration-150
-            "
-          >
-            {isEdit ? "Guardar cambios" : "Crear tarea"}
-          </Button>
-
-          {isEdit && onDelete && (
-            <IconButton
-              iconName="Trash2"
-              onClick={onDelete}
-              className="
-                w-10 h-10 rounded-lg
-                bg-[#364C59] hover:bg-red-500
-                active:scale-95 transition-all duration-150
-              "
-              iconClassName="text-[#C7D4D9]"
+        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+          <span style={{ color: "#77848C", fontSize: 12 }}>Nombre <span style={{ color: "#ff6b6b" }}>*</span></span>
+          <div style={{ position: "relative" }}>
+            <div style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }}>
+              <Icon name="Type" size={14} color="#77848C" />
+            </div>
+            <input
+              type="text"
+              value={form.title}
+              onChange={handleChange("title")}
+              placeholder="¿Qué necesitas hacer?"
+              style={inputWithIcon}
+              onFocus={e => e.target.style.borderColor = "#7B2FBE"}
+              onBlur={e => e.target.style.borderColor = "#364C59"}
             />
-          )}
+          </div>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+          <span style={{ color: "#77848C", fontSize: 12 }}>Descripción</span>
+          <div style={{ position: "relative" }}>
+            <div style={{ position: "absolute", left: 12, top: 12, pointerEvents: "none" }}>
+              <Icon name="AlignLeft" size={14} color="#77848C" />
+            </div>
+            <textarea
+              value={form.description}
+              onChange={handleChange("description")}
+              placeholder="Detalles opcionales..."
+              rows={3}
+              style={{ ...inputWithIcon, resize: "none", paddingTop: 10 }}
+              onFocus={e => e.target.style.borderColor = "#7B2FBE"}
+              onBlur={e => e.target.style.borderColor = "#364C59"}
+            />
+          </div>
+        </div>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+          <span style={{ color: "#77848C", fontSize: 12 }}>Programación</span>
+          <div style={{ display: "flex", gap: 12 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
+              <span style={{ color: "#77848C", fontSize: 11, display: "flex", alignItems: "center", gap: 4 }}>
+                <Icon name="Calendar" size={11} color="#77848C" />
+                Fecha
+              </span>
+              <input
+                type="date"
+                value={form.dueDate}
+                onChange={handleChange("dueDate")}
+                style={inputBase}
+                onFocus={e => e.target.style.borderColor = "#7B2FBE"}
+                onBlur={e => e.target.style.borderColor = "#364C59"}
+              />
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 4, flex: 1 }}>
+              <span style={{ color: "#77848C", fontSize: 11, display: "flex", alignItems: "center", gap: 4 }}>
+                <Icon name="Clock" size={11} color="#77848C" />
+                Hora
+              </span>
+              <input
+                type="time"
+                value={form.dueTime}
+                onChange={handleChange("dueTime")}
+                style={inputBase}
+                onFocus={e => e.target.style.borderColor = "#7B2FBE"}
+                onBlur={e => e.target.style.borderColor = "#364C59"}
+              />
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {isEdit && (
+        <div style={{ display: "flex", gap: 12, paddingTop: 8, borderTop: "1px solid #364C59" }}>
+          <button
+            onClick={onCancel}
+            style={{ flex: 1, padding: "8px 0", borderRadius: 12, background: "#364C59", color: "#C7D4D9", fontWeight: 500, border: "none", cursor: "pointer", fontSize: 14 }}
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={handleSubmit}
+            style={{ flex: 1, padding: "8px 0", borderRadius: 12, background: "#7B2FBE", color: "#fff", fontWeight: 500, border: "none", cursor: "pointer", fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
+          >
+            <Icon name="Save" size={15} color="#fff" />
+            Guardar cambios
+          </button>
+        </div>
+      )}
+
+      {mode === "create" && (
+        <div style={{ display: "flex", gap: 12, paddingTop: 8, borderTop: "1px solid #364C59" }}>
+          <button
+            onClick={onCancel}
+            style={{ flex: 1, padding: "8px 0", borderRadius: 12, background: "#364C59", color: "#C7D4D9", fontWeight: 500, border: "none", cursor: "pointer", fontSize: 14 }}
+          >
+            Cancelar
+          </button>
+          <button
+            onClick={handleSubmit}
+            style={{ flex: 1, padding: "8px 0", borderRadius: 12, background: "#7B2FBE", color: "#fff", fontWeight: 500, border: "none", cursor: "pointer", fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
+          >
+            <Icon name="Plus" size={15} color="#fff" />
+            Crear tarea
+          </button>
         </div>
       )}
 

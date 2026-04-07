@@ -23,21 +23,14 @@ function MainTemplate({ children, activeTab, onTabChange, fab = null, search = n
                 todo-inteligente
               </span>
             </div>
-            <button
-              className="flex items-center gap-1 px-3 py-1 rounded-full cursor-pointer transition-all duration-150 hover:opacity-80"
-              style={{ background: "#364C59", color: "#C7D4D9", fontSize: 13, height: "28px" }}
-            >
-              <Icon name="Globe" size={14} />
-              <span>ES</span>
-            </button>
           </div>
 
           <div style={{ height: "24px" }} />
 
           {search && (
-              <div className="px-4 pb-4" style={{ maxWidth: "980px", margin: "0 auto", width: "100%" }}>
-                {search}
-              </div>
+            <div className="px-4 pb-4" style={{ maxWidth: "980px", margin: "0 auto", width: "100%" }}>
+              {search}
+            </div>
           )}
 
           {counter && (
@@ -45,6 +38,7 @@ function MainTemplate({ children, activeTab, onTabChange, fab = null, search = n
               {counter}
             </div>
           )}
+
           <div style={{ height: "8px" }} />
         </div>
 
