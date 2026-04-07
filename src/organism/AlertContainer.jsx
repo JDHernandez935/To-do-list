@@ -2,7 +2,7 @@ import Alert from "./Alert"
 
 function AlertContainer({ alerts, onClose }) {
   return (
-    <div className="fixed top-4 right-4 flex flex-col gap-2 z-50">
+    <div className="fixed top-4 right-4 flex flex-col gap-2 z-[100]">
       {alerts.map(alert => (
         <Alert
           key={alert.id}

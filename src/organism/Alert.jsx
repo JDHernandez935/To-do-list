@@ -1,59 +1,80 @@
-import { useEffect } from "react"
 import Icon from "../atoms/Icon"
 import Text from "../atoms/Text"
+import { useAlertAnimation } from "../hooks/useAlertAnimation"
 
 function Alert({ type = "success", message, onClose, duration = 3000 }) {
   const types = {
     success: {
       icon: "CheckCircle",
-      iconClass: "text-green-400",
-      borderClass: "border-green-500",
-      bgClass: "bg-[#1a2e1a]",
+      iconColor: "#4ade80",
+      borderColor: "#364C59",
+      bg: "#233240",
+      textColor: "#C7D4D9",
+      accentColor: "#4ade80",
     },
     error: {
-      icon: "XCircle",
-      iconClass: "text-red-400",
-      borderClass: "border-red-500",
-      bgClass: "bg-[#2e1a1a]",
+      icon: "AlertCircle",
+      iconColor: "#ff6b6b",
+      borderColor: "#364C59",
+      bg: "#233240",
+      textColor: "#C7D4D9",
+      accentColor: "#ff6b6b",
     },
     warning: {
       icon: "AlertTriangle",
-      iconClass: "text-yellow-400",
-      borderClass: "border-yellow-500",
-      bgClass: "bg-[#2e2a1a]",
+      iconColor: "#facc15",
+      borderColor: "#364C59",
+      bg: "#233240",
+      textColor: "#C7D4D9",
+      accentColor: "#facc15",
     },
     info: {
       icon: "Info",
-      iconClass: "text-blue-400",
-      borderClass: "border-blue-500",
-      bgClass: "bg-[#00010D]",
+      iconColor: "#7B2FBE",
+      borderColor: "#364C59",
+      bg: "#233240",
+      textColor: "#C7D4D9",
+      accentColor: "#7B2FBE",
     },
   }
 
   const current = types[type]
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      onClose()
-    }, duration)
-    return () => clearTimeout(timer)
-  }, [duration, onClose])
+  const { leaving } = useAlertAnimation(duration, onClose)
 
   return (
-    <div className={`
-      flex items-center gap-3
-      px-4 py-3 rounded-lg
-      border ${current.borderClass}
-      ${current.bgClass}
-      shadow-lg w-72
-      animate-slide-in
-    `}>
-      <Icon name={current.icon} size={20} className={current.iconClass} />
-      <Text variant="small" className="text-[#C7D4D9] flex-1">
+    <div
+      className={`flex items-center gap-4 px-4 py-4 rounded-2xl ${leaving ? "alert-leave" : "alert-enter"}`}
+      style={{
+        background: current.bg,
+        border: `1px solid ${current.borderColor}`,
+        borderLeft: `4px solid ${current.accentColor}`,
+        width: "340px",
+        boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
+      }}
+    >
+      <div
+        className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
+        style={{
+          background: `${current.accentColor}20`,
+          border: `1.5px solid ${current.accentColor}`,
+        }}
+      >
+        <Icon name={current.icon} size={18} color={current.accentColor} />
+      </div>
+
+      <Text
+        variant="small"
+        className="flex-1 font-medium"
+        style={{ color: current.textColor }}
+      >
         {message}
       </Text>
-      <button onClick={onClose} className="cursor-pointer">
-        <Icon name="X" size={14} className="text-[#77848C] hover:text-[#C7D4D9]" />
+
+      <button
+        onClick={onClose}
+        className="cursor-pointer flex-shrink-0 hover:opacity-70 transition-opacity"
+      >
+        <Icon name="X" size={14} color={current.textColor} />
       </button>
     </div>
   )
