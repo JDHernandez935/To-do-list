@@ -8,7 +8,7 @@ function ModalTemplate({ children, onClose, className = "" }) {
         className={`
           w-full max-w-lg rounded-2xl
           bg-[#233240] border border-[#364C59]
-          p-6
+          py-5
           ${className}
         `}
         onClick={(e) => e.stopPropagation()}
