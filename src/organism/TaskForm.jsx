@@ -117,6 +117,7 @@ function TaskForm({ mode = "create", task = null, onSubmit, onCancel }) {
                 type="date"
                 value={form.dueDate}
                 onChange={handleChange("dueDate")}
+                onClick={e => e.target.showPicker()}
                 style={inputBase}
                 onFocus={e => e.target.style.borderColor = "#7B2FBE"}
                 onBlur={e => e.target.style.borderColor = "#364C59"}
@@ -131,6 +132,7 @@ function TaskForm({ mode = "create", task = null, onSubmit, onCancel }) {
                 type="time"
                 value={form.dueTime}
                 onChange={handleChange("dueTime")}
+                onClick={e => e.target.showPicker()}
                 style={inputBase}
                 onFocus={e => e.target.style.borderColor = "#7B2FBE"}
                 onBlur={e => e.target.style.borderColor = "#364C59"}
