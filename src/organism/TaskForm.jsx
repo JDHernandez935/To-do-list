@@ -1,5 +1,7 @@
 import { useState } from "react"
 import Icon from "../atoms/Icon"
+import Button from "../atoms/Button"
+import IconButton from "../molecules/IconButton"
 
 function TaskForm({ mode = "create", task = null, onSubmit, onCancel }) {
   const [form, setForm] = useState({
@@ -43,10 +45,7 @@ function TaskForm({ mode = "create", task = null, onSubmit, onCancel }) {
     pointerEvents: isReadOnly ? "none" : "auto",
   }
 
-  const inputWithIcon = {
-    ...inputBase,
-    paddingLeft: "36px",
-  }
+  const inputWithIcon = { ...inputBase, paddingLeft: "36px" }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "20px", padding: "20px" }}>
@@ -58,9 +57,14 @@ function TaskForm({ mode = "create", task = null, onSubmit, onCancel }) {
         <span style={{ color: "#C7D4D9", fontWeight: 600, fontSize: 18, flex: 1 }}>
           {config.title}
         </span>
-        <button onClick={onCancel} style={{ width: 32, height: 32, borderRadius: "50%", background: "#364C59", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", border: "none", flexShrink: 0 }}>
-          <Icon name="X" size={14} color="#C7D4D9" />
-        </button>
+        <IconButton
+          iconName="X"
+          size={14}
+          onClick={onCancel}
+          className="w-8 h-8 rounded-full flex-shrink-0"
+          iconClassName="text-[#C7D4D9]"
+          style={{ background: "#364C59" }}
+        />
       </div>
 
       <span style={{ color: "#77848C", fontSize: 13 }}>
@@ -70,7 +74,9 @@ function TaskForm({ mode = "create", task = null, onSubmit, onCancel }) {
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-          <span style={{ color: "#77848C", fontSize: 12 }}>Nombre <span style={{ color: "#ff6b6b" }}>*</span></span>
+          <span style={{ color: "#77848C", fontSize: 12 }}>
+            Nombre <span style={{ color: "#ff6b6b" }}>*</span>
+          </span>
           <div style={{ position: "relative" }}>
             <div style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }}>
               <Icon name="Type" size={14} color="#77848C" />
@@ -145,37 +151,41 @@ function TaskForm({ mode = "create", task = null, onSubmit, onCancel }) {
 
       {isEdit && (
         <div style={{ display: "flex", gap: 12, paddingTop: 8, borderTop: "1px solid #364C59" }}>
-          <button
+          <Button
             onClick={onCancel}
-            style={{ flex: 1, padding: "8px 0", borderRadius: 12, background: "#364C59", color: "#C7D4D9", fontWeight: 500, border: "none", cursor: "pointer", fontSize: 14 }}
+            className="flex-1 py-2 rounded-xl font-medium active:scale-95 transition-all duration-150"
+            style={{ background: "#364C59", color: "#C7D4D9" }}
           >
             Cancelar
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={handleSubmit}
-            style={{ flex: 1, padding: "8px 0", borderRadius: 12, background: "#7B2FBE", color: "#fff", fontWeight: 500, border: "none", cursor: "pointer", fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
+            className="flex-1 py-2 rounded-xl font-medium active:scale-95 transition-all duration-150 flex items-center justify-center gap-2"
+            style={{ background: "#7B2FBE", color: "#fff" }}
           >
             <Icon name="Save" size={15} color="#fff" />
             Guardar cambios
-          </button>
+          </Button>
         </div>
       )}
 
       {mode === "create" && (
         <div style={{ display: "flex", gap: 12, paddingTop: 8, borderTop: "1px solid #364C59" }}>
-          <button
+          <Button
             onClick={onCancel}
-            style={{ flex: 1, padding: "8px 0", borderRadius: 12, background: "#364C59", color: "#C7D4D9", fontWeight: 500, border: "none", cursor: "pointer", fontSize: 14 }}
+            className="flex-1 py-2 rounded-xl font-medium active:scale-95 transition-all duration-150"
+            style={{ background: "#364C59", color: "#C7D4D9" }}
           >
             Cancelar
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={handleSubmit}
-            style={{ flex: 1, padding: "8px 0", borderRadius: 12, background: "#7B2FBE", color: "#fff", fontWeight: 500, border: "none", cursor: "pointer", fontSize: 14, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}
+            className="flex-1 py-2 rounded-xl font-medium active:scale-95 transition-all duration-150 flex items-center justify-center gap-2"
+            style={{ background: "#7B2FBE", color: "#fff" }}
           >
             <Icon name="Plus" size={15} color="#fff" />
             Crear tarea
-          </button>
+          </Button>
         </div>
       )}
 

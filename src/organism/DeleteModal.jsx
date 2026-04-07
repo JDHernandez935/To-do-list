@@ -39,7 +39,7 @@ function DeleteModal({ taskTitle, onConfirm, onCancel, className = "" }) {
         <Button
           onClick={onConfirm}
           className="flex-1 py-2 rounded-xl font-medium active:scale-95 transition-all duration-150"
-          style={{ background: "#ff6b6b", color: "#fff" }}
+          style={{ background: "#4a1515", color: "#ff6b6b" }}
         >
           Sí, eliminar
         </Button>
