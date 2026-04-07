@@ -50,17 +50,17 @@ function TrashPage() {
       <AlertContainer alerts={alerts} onClose={removeAlert} />
       <MainTemplate activeTab={activeTab} onTabChange={handleTabChange}>
 
-        <Text variant="h2" className="text-[#e0e0e0] mb-1">
+        <Text variant="h2" className="text-[#C7D4D9] mb-1">
           Papelera
         </Text>
-        <Text variant="small" className="text-[#6a6a9a] mb-4">
+        <Text variant="small" className="text-[#77848C] mb-4">
           Las tareas se eliminan permanentemente después de 10 días
         </Text>
 
         {deletedTasks.length === 0 ? (
           <div className="flex flex-col items-center justify-center gap-3 py-16">
-            <Icon name="Trash2" size={48} className="text-[#4a4a6a]" />
-            <Text variant="body" className="text-[#6a6a9a]">
+            <Icon name="Trash2" size={48} className="text-[#364C59]" />
+            <Text variant="body" className="text-[#77848C]">
               La papelera está vacía
             </Text>
           </div>
@@ -73,19 +73,19 @@ function TrashPage() {
                   key={task.id}
                   className="
                     flex flex-col gap-3 px-4 py-3 rounded-lg
-                    bg-[#2a2a4a] border border-[#4a4a6a]
+                    bg-[#233240] border border-[#364C59]
                   "
                 >
                   <div className="flex items-center gap-3">
-                    <Icon name="Trash2" size={16} className="text-[#6a6a9a]" />
+                    <Icon name="Trash2" size={16} className="text-[#77848C]" />
                     <Text
                       variant="body"
-                      className="flex-1 text-[#e0e0e0] line-through opacity-60"
+                      className="flex-1 text-[#C7D4D9] line-through opacity-60"
                     >
                       {task.title}
                     </Text>
                     <Text variant="muted" className={`
-                      ${daysLeft <= 2 ? "text-red-400" : "text-[#6a6a9a]"}
+                      ${daysLeft <= 2 ? "text-red-400" : "text-[#77848C]"}
                     `}>
                       {daysLeft}d
                     </Text>
@@ -109,11 +109,11 @@ function TrashPage() {
                       onClick={() => setConfirmId(task.id)}
                       className="
                         w-8 h-8 rounded-lg
-                        bg-[#4a4a6a] hover:bg-red-500
+                        bg-[#364C59] hover:bg-red-500
                         active:scale-95 transition-all duration-150
                         flex items-center justify-center
                       "
-                      iconClassName="text-[#e0e0e0]"
+                      iconClassName="text-[#C7D4D9]"
                     />
                   </div>
                 </div>

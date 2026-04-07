@@ -57,24 +57,24 @@ function CalendarPage() {
         iconName="ChevronLeft"
         onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
         className="
-          w-8 h-8 rounded-full bg-[#2a2a4a]
-          hover:bg-[#4a4a6a] flex items-center justify-center
+          w-8 h-8 rounded-full bg-[#233240]
+          hover:bg-[#364C59] flex items-center justify-center
           active:scale-95 transition-all duration-150
         "
-        iconClassName="text-[#e0e0e0]"
+        iconClassName="text-[#C7D4D9]"
       />
-      <Text variant="h3" className="text-[#e0e0e0] capitalize">
+      <Text variant="h3" className="text-[#C7D4D9] capitalize">
         {format(currentMonth, "MMMM yyyy", { locale: es })}
       </Text>
       <IconButton
         iconName="ChevronRight"
         onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
         className="
-          w-8 h-8 rounded-full bg-[#2a2a4a]
-          hover:bg-[#4a4a6a] flex items-center justify-center
+          w-8 h-8 rounded-full bg-[#233240]
+          hover:bg-[#364C59] flex items-center justify-center
           active:scale-95 transition-all duration-150
         "
-        iconClassName="text-[#e0e0e0]"
+        iconClassName="text-[#C7D4D9]"
       />
     </div>
   )
@@ -87,7 +87,7 @@ function CalendarPage() {
           <Text
             key={day}
             variant="muted"
-            className="text-center text-[#6a6a9a] py-1"
+            className="text-center text-[#77848C] py-1"
           >
             {day}
           </Text>
@@ -121,7 +121,7 @@ function CalendarPage() {
             className={`
               relative flex flex-col items-center justify-center
               h-10 rounded-lg cursor-pointer transition-all duration-150
-              ${isSelected ? "bg-[#7B2FBE]" : "hover:bg-[#2a2a4a]"}
+              ${isSelected ? "bg-[#7B2FBE]" : "hover:bg-[#233240]"}
               ${!isCurrentMonth ? "opacity-30" : ""}
             `}
           >
@@ -129,7 +129,7 @@ function CalendarPage() {
               variant="small"
               className={`
                 ${isSelected ? "text-white font-medium" : ""}
-                ${isTodayDate && !isSelected ? "text-[#7B2FBE] font-medium" : "text-[#e0e0e0]"}
+                ${isTodayDate && !isSelected ? "text-[#7B2FBE] font-medium" : "text-[#C7D4D9]"}
               `}
             >
               {format(cloneDay, "d")}
@@ -158,23 +158,23 @@ function CalendarPage() {
 
   return (
     <MainTemplate activeTab={activeTab} onTabChange={handleTabChange}>
-      <Text variant="h2" className="text-[#e0e0e0] mb-4">
+      <Text variant="h2" className="text-[#C7D4D9] mb-4">
         Calendario
       </Text>
 
-      <div className="bg-[#2a2a4a] border border-[#4a4a6a] rounded-xl p-4 mb-4">
+      <div className="bg-[#233240] border border-[#364C59] rounded-xl p-4 mb-4">
         {renderHeader()}
         {renderDays()}
         {renderCells()}
       </div>
 
       <div>
-        <Text variant="small" className="text-[#6a6a9a] mb-3">
+        <Text variant="small" className="text-[#77848C] mb-3">
           {format(selectedDay, "EEEE d 'de' MMMM", { locale: es })}
         </Text>
 
         {selectedDayTasks.length === 0 ? (
-          <Text variant="muted" className="text-[#4a4a6a] text-center py-8">
+          <Text variant="muted" className="text-[#364C59] text-center py-8">
             No hay tareas para este día
           </Text>
         ) : (
@@ -186,7 +186,7 @@ function CalendarPage() {
                 onToggle={toggleTask}
                 className="
                   px-4 py-3 rounded-lg
-                  bg-[#2a2a4a] border border-[#4a4a6a]
+                  bg-[#233240] border border-[#364C59]
                   hover:border-[#7B2FBE] transition-all duration-200
                 "
               />

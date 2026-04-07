@@ -56,7 +56,7 @@ function TaskItem({ task, onToggle, className = "" }) {
         />
         <Text
           variant="body"
-          className={`flex-1 ${task.completed ? "line-through opacity-50" : "text-[#e0e0e0]"}`}
+          className={`flex-1 ${task.completed ? "line-through opacity-50" : "text-[#C7D4D9]"}`}
         >
           {task.title}
         </Text>
@@ -64,16 +64,16 @@ function TaskItem({ task, onToggle, className = "" }) {
       </div>
 
       {expanded && (
-        <div className="flex gap-2 pt-3 pl-8 border-t border-[#4a4a6a] mt-3">
+        <div className="flex gap-2 pt-3 pl-8 border-t border-[#364C59] mt-3">
           <IconButton
             iconName="Eye"
             size={16}
             onClick={() => navigate(`/task/${task.id}`, { state: { background: location } })}
             className="
               flex items-center gap-1 px-3 py-1 rounded-lg
-              bg-[#4a4a6a] hover:bg-[#6a6a9a]
+              bg-[#364C59] hover:bg-[#77848C]
               active:scale-95 transition-all duration-150
-              text-[#e0e0e0] text-xs
+              text-[#C7D4D9] text-xs
             "
           />
           <IconButton

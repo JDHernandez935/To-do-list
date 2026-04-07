@@ -8,26 +8,26 @@ function DeleteModal({ taskTitle, onConfirm, onCancel, className = "" }) {
     <div className={`flex flex-col gap-5 ${className}`}>
 
       <div className="flex items-center justify-between">
-        <Text variant="h3" className="text-[#e0e0e0]">
+        <Text variant="h3" className="text-[#C7D4D9]">
           Eliminar tarea
         </Text>
         <IconButton
           iconName="X"
           onClick={onCancel}
-          className="w-8 h-8 rounded-full bg-[#4a4a6a] hover:bg-[#6a6a9a]"
-          iconClassName="text-[#e0e0e0]"
+          className="w-8 h-8 rounded-full bg-[#364C59] hover:bg-[#77848C]"
+          iconClassName="text-[#C7D4D9]"
         />
       </div>
 
       <div className="flex flex-col items-center gap-3 py-4">
         <Icon name="Trash2" size={48} className="text-red-400" />
-        <Text variant="body" className="text-[#e0e0e0] text-center">
+        <Text variant="body" className="text-[#C7D4D9] text-center">
           ¿Estás seguro que deseas eliminar?
         </Text>
         <Text variant="small" className="text-[#7B2FBE] text-center font-medium">
           "{taskTitle}"
         </Text>
-        <Text variant="muted" className="text-[#6a6a9a] text-center">
+        <Text variant="muted" className="text-[#77848C] text-center">
           Esta acción no se puede deshacer
         </Text>
       </div>
@@ -37,8 +37,8 @@ function DeleteModal({ taskTitle, onConfirm, onCancel, className = "" }) {
           onClick={onCancel}
           className="
             flex-1 py-2 rounded-lg font-medium
-            bg-[#4a4a6a] text-[#e0e0e0]
-            hover:bg-[#6a6a9a]
+            bg-[#364C59] text-[#C7D4D9]
+            hover:bg-[#77848C]
             active:scale-95 transition-all duration-150
           "
         >

@@ -1,19 +1,23 @@
 @import "tailwindcss";
 
-:root {
-  --color-bg: #F2F2F2;
-  --color-surface: #F2ECE9;
-  --color-text-primary: #0D0D0D;
-  --color-text-secondary: #595959;
-  --color-border: #A6A6A6;
+@font-face {
+  font-family: "Miranda Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/MirandaSans[wght].woff2") format("woff2");
 }
 
-.dark {
-  --color-bg: #0D0000;
-  --color-surface: #262121;
-  --color-text-primary: #F2F2F2;
-  --color-text-secondary: #A6A3A1;
-  --color-border: #595656;
+:root {
+  --bg: #00010D;
+  --surface: #233240;
+  --surface2: #364C59;
+  --border: #364C59;
+  --border2: #77848C;
+  --text: #C7D4D9;
+  --text-muted: #77848C;
+  --accent: #7B2FBE;
+  --accent-hover: #9B4FDE;
 }
 
 * {
@@ -23,7 +27,10 @@
 }
 
 body {
-  background-color: var(--color-bg);
-  color: var(--color-text-primary);
+  font-family: "Miranda Sans", Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
   transition: background-color 0.3s ease, color 0.3s ease;
 }

@@ -7,7 +7,7 @@ function ModalTemplate({ children, onClose, className = "" }) {
       <div
         className={`
           w-full max-w-lg rounded-2xl
-          bg-[#2a2a4a] border border-[#4a4a6a]
+          bg-[#233240] border border-[#364C59]
           p-6
           ${className}
         `}

@@ -24,7 +24,7 @@ function Navbar({ activeTab, onTabChange, className = "" }) {
                  active:scale-95`
               : activeTab === tab.id
                 ? "text-[#7B2FBE]"
-                : "text-[#6a6a9a] hover:text-[#e0e0e0]"
+                : "text-[#77848C] hover:text-[#C7D4D9]"
             }
           `}
         >

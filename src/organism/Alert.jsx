@@ -26,7 +26,7 @@ function Alert({ type = "success", message, onClose, duration = 3000 }) {
       icon: "Info",
       iconClass: "text-blue-400",
       borderClass: "border-blue-500",
-      bgClass: "bg-[#1a1a2e]",
+      bgClass: "bg-[#00010D]",
     },
   }
 
@@ -49,11 +49,11 @@ function Alert({ type = "success", message, onClose, duration = 3000 }) {
       animate-slide-in
     `}>
       <Icon name={current.icon} size={20} className={current.iconClass} />
-      <Text variant="small" className="text-[#e0e0e0] flex-1">
+      <Text variant="small" className="text-[#C7D4D9] flex-1">
         {message}
       </Text>
       <button onClick={onClose} className="cursor-pointer">
-        <Icon name="X" size={14} className="text-[#6a6a9a] hover:text-[#e0e0e0]" />
+        <Icon name="X" size={14} className="text-[#77848C] hover:text-[#C7D4D9]" />
       </button>
     </div>
   )

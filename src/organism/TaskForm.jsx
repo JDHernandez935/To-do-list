@@ -28,14 +28,14 @@ function TaskForm({ mode = "create", task = null, onSubmit, onCancel, onDelete, 
     <div className={`flex flex-col gap-5 ${className}`}>
 
       <div className="flex items-center justify-between">
-        <Text variant="h3" className="text-[#e0e0e0]">
+        <Text variant="h3" className="text-[#C7D4D9]">
           {mode === "create" ? "Nueva tarea" : mode === "edit" ? "Editar tarea" : form.title}
         </Text>
         <IconButton
           iconName="X"
           onClick={onCancel}
-          className="w-8 h-8 rounded-full bg-[#4a4a6a] hover:bg-[#6a6a9a]"
-          iconClassName="text-[#e0e0e0]"
+          className="w-8 h-8 rounded-full bg-[#364C59] hover:bg-[#77848C]"
+          iconClassName="text-[#C7D4D9]"
         />
       </div>
 
@@ -46,8 +46,8 @@ function TaskForm({ mode = "create", task = null, onSubmit, onCancel, onDelete, 
         onChange={handleChange("title")}
         required
         inputClassName={`
-          bg-[#1a1a2e] border-[#4a4a6a]
-          text-[#e0e0e0] placeholder-[#6a6a9a]
+          bg-[#00010D] border-[#364C59]
+          text-[#C7D4D9] placeholder-[#77848C]
           focus:border-[#7B2FBE]
           ${isReadOnly ? "pointer-events-none opacity-70" : ""}
         `}
@@ -59,8 +59,8 @@ function TaskForm({ mode = "create", task = null, onSubmit, onCancel, onDelete, 
         value={form.description}
         onChange={handleChange("description")}
         inputClassName={`
-          bg-[#1a1a2e] border-[#4a4a6a]
-          text-[#e0e0e0] placeholder-[#6a6a9a]
+          bg-[#00010D] border-[#364C59]
+          text-[#C7D4D9] placeholder-[#77848C]
           focus:border-[#7B2FBE]
           ${isReadOnly ? "pointer-events-none opacity-70" : ""}
         `}
@@ -74,8 +74,8 @@ function TaskForm({ mode = "create", task = null, onSubmit, onCancel, onDelete, 
           onChange={handleChange("dueDate")}
           className="flex-1"
           inputClassName={`
-            bg-[#1a1a2e] border-[#4a4a6a]
-            text-[#e0e0e0]
+            bg-[#00010D] border-[#364C59]
+            text-[#C7D4D9]
             focus:border-[#7B2FBE]
             ${isReadOnly ? "pointer-events-none opacity-70" : ""}
           `}
@@ -87,8 +87,8 @@ function TaskForm({ mode = "create", task = null, onSubmit, onCancel, onDelete, 
           onChange={handleChange("dueTime")}
           className="flex-1"
           inputClassName={`
-            bg-[#1a1a2e] border-[#4a4a6a]
-            text-[#e0e0e0]
+            bg-[#00010D] border-[#364C59]
+            text-[#C7D4D9]
             focus:border-[#7B2FBE]
             ${isReadOnly ? "pointer-events-none opacity-70" : ""}
           `}
@@ -115,10 +115,10 @@ function TaskForm({ mode = "create", task = null, onSubmit, onCancel, onDelete, 
               onClick={onDelete}
               className="
                 w-10 h-10 rounded-lg
-                bg-[#4a4a6a] hover:bg-red-500
+                bg-[#364C59] hover:bg-red-500
                 active:scale-95 transition-all duration-150
               "
-              iconClassName="text-[#e0e0e0]"
+              iconClassName="text-[#C7D4D9]"
             />
           )}
         </div>

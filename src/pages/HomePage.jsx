@@ -65,19 +65,19 @@ function HomePage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar tarea..."
-            className="flex-1 px-3 py-2 rounded-lg bg-[#2a2a4a] border border-[#4a4a6a]"
-            inputClassName="text-[#e0e0e0] placeholder-[#6a6a9a]"
-            iconClassName="text-[#6a6a9a]"
+            className="flex-1 px-3 py-2 rounded-lg bg-[#233240] border border-[#364C59]"
+            inputClassName="text-[#C7D4D9] placeholder-[#77848C]"
+            iconClassName="text-[#77848C]"
           />
           <IconButton
             iconName="SlidersHorizontal"
             onClick={() => setShowFilters(!showFilters)}
             className="
-              w-10 h-10 rounded-lg bg-[#2a2a4a] border border-[#4a4a6a]
+              w-10 h-10 rounded-lg bg-[#233240] border border-[#364C59]
               hover:border-[#7B2FBE] transition-all duration-200
               flex items-center justify-center
             "
-            iconClassName={showFilters ? "text-[#7B2FBE]" : "text-[#6a6a9a]"}
+            iconClassName={showFilters ? "text-[#7B2FBE]" : "text-[#77848C]"}
           />
         </div>
 
@@ -97,13 +97,13 @@ function HomePage() {
                 active={activeFilter === filter}
                 onClick={() => setActiveFilter(filter)}
                 activeClassName="bg-[#7B2FBE] text-white"
-                inactiveClassName="bg-[#2a2a4a] text-[#6a6a9a] border border-[#4a4a6a] hover:border-[#7B2FBE]"
+                inactiveClassName="bg-[#233240] text-[#77848C] border border-[#364C59] hover:border-[#7B2FBE]"
               />
             ))}
           </div>
         )}
 
-        <Text variant="h2" className="text-[#e0e0e0] mb-4">
+        <Text variant="h2" className="text-[#C7D4D9] mb-4">
           {filteredTasks.filter(t => !t.completed).length} tareas pendientes
         </Text>
 

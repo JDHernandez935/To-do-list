@@ -2,7 +2,7 @@ import Navbar from "../organism/Navbar"
 
 function MainTemplate({ children, activeTab, onTabChange, fab = null }) {
   return (
-    <div className="relative min-h-screen bg-[#1a1a2e]">
+    <div className="relative min-h-screen bg-[#00010D]">
 
       <div className="pb-24 px-4 pt-6">
         {children}
@@ -14,7 +14,7 @@ function MainTemplate({ children, activeTab, onTabChange, fab = null }) {
         </div>
       )}
 
-      <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#1a1a2e] border-t border-[#4a4a6a]">
+      <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#00010D] border-t border-[#364C59]">
         <Navbar activeTab={activeTab} onTabChange={onTabChange} />
       </div>
 
