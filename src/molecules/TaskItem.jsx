@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useNavigate, useLocation } from "react-router-dom"
 import Checkbox from "../atoms/Checkbox"
 import Text from "../atoms/Text"
-import Badge from "../atoms/Badge"
+import Badge from "./Badge"
 import Icon from "../atoms/Icon"
 
 function TaskItem({ task, onToggle, className = "" }) {
