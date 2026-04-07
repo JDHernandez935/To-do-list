@@ -3,20 +3,19 @@ import { useState } from "react"
 import { useTasks } from "../hooks/useTasks"
 import useAlerts from "../hooks/useAlerts"
 import MainTemplate from "../templates/MainTemplate"
-import AlertContainer from "../organism/AlertContainer"
 import ModalTemplate from "../templates/ModalTemplate"
 import DeleteModal from "../organism/DeleteModal"
-import Text from "../atoms/Text"
-import IconButton from "../molecules/IconButton"
 import Icon from "../atoms/Icon"
 import Button from "../atoms/Button"
 
 function TrashPage() {
   const navigate = useNavigate()
   const { deletedTasks, restoreTask, permanentDelete } = useTasks()
-  const { alerts, success, removeAlert } = useAlerts()
+  const { success } = useAlerts()
   const [activeTab, setActiveTab] = useState("trash")
   const [confirmId, setConfirmId] = useState(null)
+  const [confirmAll, setConfirmAll] = useState(false)
+  const [selected, setSelected] = useState([])
 
   const handleTabChange = (tab) => {
     setActiveTab(tab)
@@ -26,101 +25,211 @@ function TrashPage() {
 
   const handleRestore = (id) => {
     restoreTask(id)
+    setSelected(prev => prev.filter(s => s !== id))
     success("Tarea restaurada correctamente")
+  }
+
+  const handleRestoreSelected = () => {
+    selected.forEach(id => restoreTask(id))
+    success(`${selected.length} tarea(s) restaurada(s)`)
+    setSelected([])
+  }
+
+  const handleRestoreAll = () => {
+    deletedTasks.forEach(t => restoreTask(t.id))
+    success("Todas las tareas restauradas")
+    setSelected([])
   }
 
   const handlePermanentDelete = (id) => {
     permanentDelete(id)
     setConfirmId(null)
+    setSelected(prev => prev.filter(s => s !== id))
     success("Tarea eliminada permanentemente")
+  }
+
+  const handleEmptyTrash = () => {
+    deletedTasks.forEach(t => permanentDelete(t.id))
+    setConfirmAll(false)
+    setSelected([])
+    success("Papelera vaciada")
+  }
+
+  const handleDeleteSelected = () => {
+    selected.forEach(id => permanentDelete(id))
+    success(`${selected.length} tarea(s) eliminada(s) permanentemente`)
+    setSelected([])
+  }
+
+  const toggleSelect = (id) => {
+    setSelected(prev =>
+      prev.includes(id) ? prev.filter(s => s !== id) : [...prev, id]
+    )
   }
 
   const getDaysLeft = (deletedAt) => {
     const deleted = new Date(deletedAt)
     const expires = new Date(deleted.getTime() + 10 * 24 * 60 * 60 * 1000)
     const today = new Date()
-    const diff = Math.ceil((expires - today) / (1000 * 60 * 60 * 24))
-    return diff
+    return Math.ceil((expires - today) / (1000 * 60 * 60 * 24))
+  }
+
+  const getDaysAgo = (deletedAt) => {
+    const deleted = new Date(deletedAt)
+    const today = new Date()
+    return Math.floor((today - deleted) / (1000 * 60 * 60 * 24))
   }
 
   const taskToDelete = deletedTasks.find(t => t.id === confirmId)
+  const sortedTasks = [...deletedTasks].sort((a, b) => getDaysLeft(a.deletedAt) - getDaysLeft(b.deletedAt))
 
   return (
     <>
-      <AlertContainer alerts={alerts} onClose={removeAlert} />
-      <MainTemplate activeTab={activeTab} onTabChange={handleTabChange}>
+      <MainTemplate activeTab={activeTab} onTabChange={handleTabChange} noPadding>
 
-        <Text variant="h2" className="text-[#C7D4D9] mb-1">
-          Papelera
-        </Text>
-        <Text variant="small" className="text-[#77848C] mb-4">
-          Las tareas se eliminan permanentemente después de 10 días
-        </Text>
+        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
 
-        {deletedTasks.length === 0 ? (
-          <div className="flex flex-col items-center justify-center gap-3 py-16">
-            <Icon name="Trash2" size={48} className="text-[#364C59]" />
-            <Text variant="body" className="text-[#77848C]">
-              La papelera está vacía
-            </Text>
-          </div>
-        ) : (
-          <div className="flex flex-col gap-3">
-            {deletedTasks.map(task => {
-              const daysLeft = getDaysLeft(task.deletedAt)
-              return (
-                <div
-                  key={task.id}
-                  className="
-                    flex flex-col gap-3 px-4 py-3 rounded-lg
-                    bg-[#233240] border border-[#364C59]
-                  "
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <Icon name="Trash2" size={20} color="#77848C" />
+                <span style={{ color: "#C7D4D9", fontSize: 20, fontWeight: 600 }}>
+                  Papelera
+                </span>
+                {deletedTasks.length > 0 && (
+                  <span style={{ background: "#364C59", color: "#77848C", fontSize: 12, fontWeight: 500, padding: "2px 8px", borderRadius: 20 }}>
+                    {deletedTasks.length}
+                  </span>
+                )}
+              </div>
+              <span style={{ color: "#77848C", fontSize: 12, marginTop: 2, display: "block" }}>
+                Las tareas se eliminan permanentemente después de 10 días
+              </span>
+            </div>
+
+            {deletedTasks.length > 0 && (
+              <div style={{ display: "flex", gap: 8 }}>
+                <button
+                  onClick={handleRestoreAll}
+                  style={{ padding: "6px 12px", borderRadius: 8, cursor: "pointer", fontSize: 12, fontWeight: 500, background: "#233240", color: "#7B2FBE", border: "1px solid #7B2FBE" }}
                 >
-                  <div className="flex items-center gap-3">
-                    <Icon name="Trash2" size={16} className="text-[#77848C]" />
-                    <Text
-                      variant="body"
-                      className="flex-1 text-[#C7D4D9] line-through opacity-60"
-                    >
-                      {task.title}
-                    </Text>
-                    <Text variant="muted" className={`
-                      ${daysLeft <= 2 ? "text-red-400" : "text-[#77848C]"}
-                    `}>
-                      {daysLeft}d
-                    </Text>
-                  </div>
-
-                  <div className="flex gap-2 pl-7">
-                    <Button
-                      onClick={() => handleRestore(task.id)}
-                      className="
-                        flex-1 py-1 rounded-lg text-sm font-medium
-                        bg-[#7B2FBE] text-white
-                        hover:bg-[#9B4FDE]
-                        active:scale-95 transition-all duration-150
-                      "
-                    >
-                      Restaurar
-                    </Button>
-                    <IconButton
-                      iconName="Trash2"
-                      size={16}
-                      onClick={() => setConfirmId(task.id)}
-                      className="
-                        w-8 h-8 rounded-lg
-                        bg-[#364C59] hover:bg-red-500
-                        active:scale-95 transition-all duration-150
-                        flex items-center justify-center
-                      "
-                      iconClassName="text-[#C7D4D9]"
-                    />
-                  </div>
-                </div>
-              )
-            })}
+                  Restaurar todo
+                </button>
+                <button
+                  onClick={() => setConfirmAll(true)}
+                  style={{ padding: "6px 12px", borderRadius: 8, cursor: "pointer", fontSize: 12, fontWeight: 500, background: "#4a1515", color: "#ff6b6b", border: "1px solid #ff6b6b" }}
+                >
+                  Vaciar papelera
+                </button>
+              </div>
+            )}
           </div>
-        )}
+
+          {selected.length > 0 && (
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", borderRadius: 10, background: "#233240", border: "1px solid #7B2FBE" }}>
+              <span style={{ color: "#C7D4D9", fontSize: 13 }}>
+                {selected.length} seleccionada(s)
+              </span>
+              <div style={{ display: "flex", gap: 8 }}>
+                <button
+                  onClick={handleRestoreSelected}
+                  style={{ padding: "4px 12px", borderRadius: 8, cursor: "pointer", fontSize: 12, background: "#7B2FBE", color: "#fff", border: "none" }}
+                >
+                  Restaurar
+                </button>
+                <button
+                  onClick={handleDeleteSelected}
+                  style={{ padding: "4px 12px", borderRadius: 8, cursor: "pointer", fontSize: 12, background: "#4a1515", color: "#ff6b6b", border: "none" }}
+                >
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          )}
+
+          {deletedTasks.length === 0 ? (
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12, minHeight: "50vh" }}>
+              <div style={{ width: 64, height: 64, borderRadius: "50%", background: "#233240", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Icon name="Trash2" size={28} color="#364C59" />
+              </div>
+              <span style={{ color: "#77848C", fontSize: 15, fontWeight: 500 }}>La papelera está vacía</span>
+              <span style={{ color: "#364C59", fontSize: 13 }}>Las tareas eliminadas aparecerán aquí</span>
+            </div>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              {sortedTasks.map(task => {
+                const daysLeft = getDaysLeft(task.deletedAt)
+                const daysAgo = getDaysAgo(task.deletedAt)
+                const isSelected = selected.includes(task.id)
+                const isUrgent = daysLeft <= 2
+                const progress = ((10 - daysLeft) / 10) * 100
+
+                return (
+                  <div
+                    key={task.id}
+                    style={{
+                      borderRadius: 12, background: "#233240",
+                      border: isSelected ? "1px solid #7B2FBE" : "1px solid #364C59",
+                      transition: "all 0.15s", overflow: "hidden",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 14px" }}>
+
+                      <button
+                        onClick={() => toggleSelect(task.id)}
+                        style={{
+                          width: 18, height: 18, borderRadius: 4, flexShrink: 0, cursor: "pointer",
+                          background: isSelected ? "#7B2FBE" : "#364C59",
+                          border: isSelected ? "none" : "1px solid #77848C",
+                          display: "flex", alignItems: "center", justifyContent: "center",
+                        }}
+                      >
+                        {isSelected && <Icon name="Check" size={10} color="#fff" />}
+                      </button>
+
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <span style={{ color: "#77848C", fontSize: 14, textDecoration: "line-through", display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                          {task.title}
+                        </span>
+                        <div style={{ display: "flex", gap: 12, marginTop: 4 }}>
+                          <span style={{ color: "#364C59", fontSize: 11 }}>
+                            Eliminada hace {daysAgo}d
+                          </span>
+                          <span style={{ color: isUrgent ? "#ff6b6b" : "#77848C", fontSize: 11, fontWeight: isUrgent ? 600 : 400 }}>
+                            Expira en {daysLeft}d
+                          </span>
+                        </div>
+                      </div>
+
+                      <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
+                        <button
+                          onClick={() => handleRestore(task.id)}
+                          style={{ padding: "4px 10px", borderRadius: 8, cursor: "pointer", fontSize: 12, fontWeight: 500, background: "#364C59", color: "#7B2FBE", border: "1px solid #7B2FBE", transition: "all 0.15s" }}
+                        >
+                          Restaurar
+                        </button>
+                        <button
+                          onClick={() => setConfirmId(task.id)}
+                          style={{ width: 28, height: 28, borderRadius: 8, cursor: "pointer", background: "#4a1515", border: "none", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s" }}
+                        >
+                          <Icon name="Trash2" size={13} color="#ff6b6b" />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div style={{ height: 3, background: "#364C59" }}>
+                      <div style={{
+                        height: "100%", borderRadius: 2, transition: "width 0.3s",
+                        width: `${progress}%`,
+                        background: isUrgent ? "#ff6b6b" : daysLeft <= 5 ? "#facc15" : "#7B2FBE",
+                      }} />
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
 
       </MainTemplate>
 
@@ -130,6 +239,16 @@ function TrashPage() {
             taskTitle={taskToDelete.title}
             onConfirm={() => handlePermanentDelete(confirmId)}
             onCancel={() => setConfirmId(null)}
+          />
+        </ModalTemplate>
+      )}
+
+      {confirmAll && (
+        <ModalTemplate onClose={() => setConfirmAll(false)}>
+          <DeleteModal
+            taskTitle={`${deletedTasks.length} tarea(s) de la papelera`}
+            onConfirm={handleEmptyTrash}
+            onCancel={() => setConfirmAll(false)}
           />
         </ModalTemplate>
       )}
