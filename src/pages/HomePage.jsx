@@ -122,6 +122,8 @@ function HomePage() {
             tasks={filteredTasks}
             onToggle={handleToggle}
             onTaskClick={(id) => navigate(`/task/${id}`)}
+            activeFilter={activeFilter}
+            search={search}
           />
         </div>
 
