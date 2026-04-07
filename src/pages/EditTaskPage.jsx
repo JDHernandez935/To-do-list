@@ -8,36 +8,32 @@ import AlertContainer from "../organism/AlertContainer"
 function EditTaskPage() {
   const navigate = useNavigate()
   const { id } = useParams()
-  const { tasks, editTask, deleteTask } = useTasks()
+  const { tasks, editTask } = useTasks()
   const { alerts, success, removeAlert } = useAlerts()
 
   const task = tasks.find(t => t.id === Number(id))
 
   if (!task) {
-    navigate("/")
+    navigate(-1)
     return null
   }
 
   const handleSubmit = (data) => {
     editTask(task.id, data)
     success("Tarea actualizada correctamente")
-    navigate("/")
-  }
-
-  const handleDelete = () => {
-    navigate(`/task/${id}/delete`)
+    navigate(-1)
   }
 
   return (
     <>
       <AlertContainer alerts={alerts} onClose={removeAlert} />
-      <ModalTemplate onClose={() => navigate("/")}>
+      <ModalTemplate onClose={() => navigate(-1)}>
         <TaskForm
           mode="edit"
           task={task}
           onSubmit={handleSubmit}
-          onCancel={() => navigate("/")}
-          onDelete={handleDelete}
+          onCancel={() => navigate(-1)}
+          onDelete={() => navigate(`/task/${id}/delete`)}
         />
       </ModalTemplate>
     </>

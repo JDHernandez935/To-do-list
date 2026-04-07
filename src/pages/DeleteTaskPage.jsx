@@ -14,7 +14,7 @@ function DeleteTaskPage() {
   const task = tasks.find(t => t.id === Number(id))
 
   if (!task) {
-    navigate("/")
+    navigate(-1)
     return null
   }
 
@@ -27,11 +27,11 @@ function DeleteTaskPage() {
   return (
     <>
       <AlertContainer alerts={alerts} onClose={removeAlert} />
-      <ModalTemplate onClose={() => navigate("/")}>
+      <ModalTemplate onClose={() => navigate(-1)}>
         <DeleteModal
           taskTitle={task.title}
           onConfirm={handleConfirm}
-          onCancel={() => navigate("/")}
+          onCancel={() => navigate(-1)}
         />
       </ModalTemplate>
     </>

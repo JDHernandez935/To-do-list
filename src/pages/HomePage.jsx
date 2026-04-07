@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation  } from "react-router-dom"
 import { useState } from "react"
 import { useTasks } from "../hooks/useTasks"
 import useAlerts from "../hooks/useAlerts"
@@ -12,6 +12,7 @@ import Text from "../atoms/Text"
 import { Outlet } from "react-router-dom"
 
 function HomePage() {
+  const location = useLocation()
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState("home")
   const [showFilters, setShowFilters] = useState(false)
@@ -42,7 +43,7 @@ function HomePage() {
     <IconButton
       iconName="Plus"
       size={24}
-      onClick={() => navigate("/add")}
+      onClick={() => navigate("/add", { state: { background: location } })}
       className="
         w-14 h-14 rounded-full
         bg-[#7B2FBE] text-white

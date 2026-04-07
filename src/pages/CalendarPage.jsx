@@ -24,8 +24,17 @@ function CalendarPage() {
   const navigate = useNavigate()
   const { tasks, toggleTask } = useTasks()
   const [currentMonth, setCurrentMonth] = useState(new Date())
-  const [selectedDay, setSelectedDay] = useState(new Date())
+
+  const [selectedDay, setSelectedDay] = useState(() => {
+    const saved = sessionStorage.getItem("calendarSelectedDay")
+    return saved ? new Date(saved) : new Date()
+  })
   const [activeTab, setActiveTab] = useState("calendar")
+
+  const handleSelectDay = (day) => {
+    setSelectedDay(day)
+    sessionStorage.setItem("calendarSelectedDay", day.toISOString())
+  }
 
   const handleTabChange = (tab) => {
     setActiveTab(tab)

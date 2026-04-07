@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import Checkbox from "../atoms/Checkbox"
 import Text from "../atoms/Text"
 import Badge from "../atoms/Badge"
@@ -8,19 +8,16 @@ import IconButton from "./IconButton"
 function TaskItem({ task, onToggle, className = "" }) {
   const [expanded, setExpanded] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
 
   const getVariant = (dueDate, completed) => {
     if (completed) return "completed"
     if (!dueDate) return "default"
-
     const today = new Date()
     const due = new Date(dueDate)
-
     today.setHours(0, 0, 0, 0)
     due.setHours(0, 0, 0, 0)
-
     const diff = Math.ceil((due - today) / (1000 * 60 * 60 * 24))
-
     if (diff < 0) return "overdue"
     if (diff === 0) return "today"
     if (diff === 1) return "tomorrow"
@@ -43,9 +40,7 @@ function TaskItem({ task, onToggle, className = "" }) {
   const variant = getVariant(task.dueDate, task.completed)
 
   return (
-    <div
-      className={`flex flex-col gap-0 transition-all duration-200 ${className}`}
-    >
+    <div className={`flex flex-col gap-0 transition-all duration-200 ${className}`}>
       <div
         className="flex items-center gap-3 cursor-pointer"
         onClick={() => setExpanded(!expanded)}
@@ -73,7 +68,7 @@ function TaskItem({ task, onToggle, className = "" }) {
           <IconButton
             iconName="Eye"
             size={16}
-            onClick={() => navigate(`/task/${task.id}`)}
+            onClick={() => navigate(`/task/${task.id}`, { state: { background: location } })}
             className="
               flex items-center gap-1 px-3 py-1 rounded-lg
               bg-[#4a4a6a] hover:bg-[#6a6a9a]
@@ -84,7 +79,7 @@ function TaskItem({ task, onToggle, className = "" }) {
           <IconButton
             iconName="Pencil"
             size={16}
-            onClick={() => navigate(`/task/${task.id}/edit`)}
+            onClick={() => navigate(`/task/${task.id}/edit`, { state: { background: location } })}
             className="
               flex items-center gap-1 px-3 py-1 rounded-lg
               bg-[#7B2FBE] hover:bg-[#9B4FDE]
@@ -95,7 +90,7 @@ function TaskItem({ task, onToggle, className = "" }) {
           <IconButton
             iconName="Trash2"
             size={16}
-            onClick={() => navigate(`/task/${task.id}/delete`)}
+            onClick={() => navigate(`/task/${task.id}/delete`, { state: { background: location } })}
             className="
               flex items-center gap-1 px-3 py-1 rounded-lg
               bg-red-500 hover:bg-red-600

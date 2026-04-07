@@ -11,16 +11,16 @@ function DetailTaskPage() {
   const task = tasks.find(t => t.id === Number(id))
 
   if (!task) {
-    navigate("/")
+    navigate(-1)
     return null
   }
 
   return (
-    <ModalTemplate onClose={() => navigate("/")}>
+    <ModalTemplate onClose={() => navigate(-1)}>
       <TaskForm
         mode="readonly"
         task={task}
-        onCancel={() => navigate("/")}
+        onCancel={() => navigate(-1)}
       />
     </ModalTemplate>
   )
