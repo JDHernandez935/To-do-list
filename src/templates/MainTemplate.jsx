@@ -2,7 +2,7 @@ import Navbar from "../organism/Navbar"
 import Toggle from "../molecules/Toggle"
 import Icon from "../atoms/Icon"
 
-function MainTemplate({ children, activeTab, onTabChange, fab = null, search = null, counter = null }) {
+function MainTemplate({ children, activeTab, onTabChange, fab = null, search = null, counter = null, noPadding = false }) {
   return (
     <div className="min-h-screen flex justify-center" style={{ background: "#00010D" }}>
       <div className="relative w-full flex flex-col" style={{ background: "#00010D" }}>
@@ -42,7 +42,7 @@ function MainTemplate({ children, activeTab, onTabChange, fab = null, search = n
           <div style={{ height: "8px" }} />
         </div>
 
-        <div className="flex-1 overflow-y-auto px-3" style={{ paddingBottom: "100px" }}>
+        <div className="flex-1 overflow-y-auto px-3" style={{ paddingBottom: noPadding ? "20px" : "100px" }}>
           {children}
         </div>
 
