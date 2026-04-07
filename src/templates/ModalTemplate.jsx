@@ -7,10 +7,10 @@ function ModalTemplate({ children, onClose, className = "" }) {
       <div
         className={`
           w-full max-w-lg rounded-2xl
-          bg-[#233240] border border-[#364C59]
-          py-5
+          border py-5
           ${className}
         `}
+        style={{ background: "var(--surface)", borderColor: "var(--border)" }}
         onClick={(e) => e.stopPropagation()}
       >
         {children}

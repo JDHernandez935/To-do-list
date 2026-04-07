@@ -25,7 +25,7 @@ function FilterModal({ onClose, className = "" }) {
   }
 
   const statusOptions = [
-    { id: "all", label: "Todas", icon: "LayoutGrid", color: "#77848C" },
+    { id: "all", label: "Todas", icon: "LayoutGrid", color: "var(--text-muted)" },
     { id: "pending", label: "Pendientes", icon: "Clock", color: "#facc15" },
     { id: "completed", label: "Completadas", icon: "CheckCircle", color: "#4ade80" },
     { id: "overdue", label: "Vencidas", icon: "AlertTriangle", color: "#ff6b6b" },
@@ -34,7 +34,7 @@ function FilterModal({ onClose, className = "" }) {
   ]
 
   const priorityOptions = [
-    { id: "all", label: "Todas", color: "#77848C", bg: "#364C59" },
+    { id: "all", label: "Todas", color: "var(--text-muted)", bg: "var(--surface2)" },
     { id: "high", label: "Alta", color: "#fff", bg: "#ff6b6b" },
     { id: "medium", label: "Media", color: "#fff", bg: "#BA7517" },
     { id: "low", label: "Baja", color: "#fff", bg: "#14532d" },
@@ -48,9 +48,9 @@ function FilterModal({ onClose, className = "" }) {
   ]
 
   const inputStyle = {
-    background: "#00010D",
-    border: "1px solid #364C59",
-    color: "#C7D4D9",
+    background: "var(--bg)",
+    border: "1px solid var(--border)",
+    color: "var(--text)",
     borderRadius: "8px",
     padding: "6px 10px",
     fontSize: "13px",
@@ -65,26 +65,26 @@ function FilterModal({ onClose, className = "" }) {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <Icon name="SlidersHorizontal" size={18} color="#7B2FBE" />
-            <span style={{ color: "#C7D4D9", fontWeight: 600, fontSize: 16 }}>Filtrar tareas</span>
+            <span style={{ color: "var(--text)", fontWeight: 600, fontSize: 16 }}>Filtrar tareas</span>
           </div>
           <IconButton
             iconName="X"
             onClick={onClose}
             className="w-8 h-8 rounded-full flex items-center justify-center hover:opacity-70 transition-opacity"
-            style={{ background: "#364C59" }}
-            iconClassName="text-[#C7D4D9]"
+            style={{ background: "var(--surface2)" }}
+            iconClassName="text-[var(--text)]"
           />
         </div>
-        <span style={{ color: "#77848C", fontSize: 12 }}>
+        <span style={{ color: "var(--text-muted)", fontSize: 12 }}>
           Ajusta los criterios de búsqueda
         </span>
       </div>
 
       <div style={{ overflowY: "auto", flex: 1, padding: "0 16px", display: "flex", flexDirection: "column", gap: 16 }}>
 
-        <div style={{ borderTop: "1px solid #364C59", paddingTop: 12 }}>
-          <span style={{ color: "#77848C", fontSize: 12, fontWeight: 500, display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
-            <Icon name="Tag" size={12} color="#77848C" />
+        <div style={{ borderTop: "1px solid var(--border)", paddingTop: 12 }}>
+          <span style={{ color: "var(--text-muted)", fontSize: 12, fontWeight: 500, display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+            <Icon name="Tag" size={12} color="var(--text-muted)" />
             Estado
           </span>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
@@ -97,13 +97,13 @@ function FilterModal({ onClose, className = "" }) {
                   style={{
                     display: "flex", alignItems: "center", gap: 8,
                     padding: "8px 12px", borderRadius: 10, cursor: "pointer",
-                    background: isActive ? "#364C59" : "#233240",
-                    border: isActive ? `1px solid ${opt.color}` : "1px solid #364C59",
+                    background: isActive ? "var(--surface2)" : "var(--surface)",
+                    border: isActive ? `1px solid ${opt.color}` : "1px solid var(--border)",
                     transition: "all 0.15s",
                   }}
                 >
-                  <Icon name={opt.icon} size={14} color={isActive ? opt.color : "#77848C"} />
-                  <span style={{ color: isActive ? "#C7D4D9" : "#77848C", fontSize: 13, fontWeight: isActive ? 500 : 400 }}>
+                  <Icon name={opt.icon} size={14} color={isActive ? opt.color : "var(--text-muted)"} />
+                  <span style={{ color: isActive ? "var(--text)" : "var(--text-muted)", fontSize: 13, fontWeight: isActive ? 500 : 400 }}>
                     {opt.label}
                   </span>
                 </button>
@@ -112,9 +112,9 @@ function FilterModal({ onClose, className = "" }) {
           </div>
         </div>
 
-        <div style={{ borderTop: "1px solid #364C59", paddingTop: 12 }}>
-          <span style={{ color: "#77848C", fontSize: 12, fontWeight: 500, display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
-            <Icon name="Calendar" size={12} color="#77848C" />
+        <div style={{ borderTop: "1px solid var(--border)", paddingTop: 12 }}>
+          <span style={{ color: "var(--text-muted)", fontSize: 12, fontWeight: 500, display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+            <Icon name="Calendar" size={12} color="var(--text-muted)" />
             Fecha
           </span>
           <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
@@ -127,9 +127,9 @@ function FilterModal({ onClose, className = "" }) {
                   onClick={() => update("status", shortcut)}
                   style={{
                     padding: "4px 12px", borderRadius: 20, cursor: "pointer", fontSize: 12,
-                    background: isActive ? "#7B2FBE" : "#233240",
-                    color: isActive ? "#fff" : "#77848C",
-                    border: isActive ? "1px solid #7B2FBE" : "1px solid #364C59",
+                    background: isActive ? "#7B2FBE" : "var(--surface)",
+                    color: isActive ? "#fff" : "var(--text-muted)",
+                    border: isActive ? "1px solid #7B2FBE" : "1px solid var(--border)",
                   }}
                 >
                   {labels[shortcut]}
@@ -139,7 +139,7 @@ function FilterModal({ onClose, className = "" }) {
           </div>
           <div style={{ display: "flex", gap: 8 }}>
             <div style={{ flex: 1 }}>
-              <span style={{ color: "#77848C", fontSize: 11, display: "block", marginBottom: 4 }}>Desde</span>
+              <span style={{ color: "var(--text-muted)", fontSize: 11, display: "block", marginBottom: 4 }}>Desde</span>
               <input
                 type="date"
                 value={local.dateFrom}
@@ -147,11 +147,11 @@ function FilterModal({ onClose, className = "" }) {
                 onClick={e => e.target.showPicker()}
                 style={inputStyle}
                 onFocus={e => e.target.style.borderColor = "#7B2FBE"}
-                onBlur={e => e.target.style.borderColor = "#364C59"}
+                onBlur={e => e.target.style.borderColor = "var(--border)"}
               />
             </div>
             <div style={{ flex: 1 }}>
-              <span style={{ color: "#77848C", fontSize: 11, display: "block", marginBottom: 4 }}>Hasta</span>
+              <span style={{ color: "var(--text-muted)", fontSize: 11, display: "block", marginBottom: 4 }}>Hasta</span>
               <input
                 type="date"
                 value={local.dateTo}
@@ -159,15 +159,15 @@ function FilterModal({ onClose, className = "" }) {
                 onClick={e => e.target.showPicker()}
                 style={inputStyle}
                 onFocus={e => e.target.style.borderColor = "#7B2FBE"}
-                onBlur={e => e.target.style.borderColor = "#364C59"}
+                onBlur={e => e.target.style.borderColor = "var(--border)"}
               />
             </div>
           </div>
         </div>
 
-        <div style={{ borderTop: "1px solid #364C59", paddingTop: 12 }}>
-          <span style={{ color: "#77848C", fontSize: 12, fontWeight: 500, display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
-            <Icon name="Clock" size={12} color="#77848C" />
+        <div style={{ borderTop: "1px solid var(--border)", paddingTop: 12 }}>
+          <span style={{ color: "var(--text-muted)", fontSize: 12, fontWeight: 500, display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+            <Icon name="Clock" size={12} color="var(--text-muted)" />
             Hora del día
           </span>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -180,12 +180,12 @@ function FilterModal({ onClose, className = "" }) {
                   style={{
                     display: "flex", alignItems: "center", gap: 6,
                     padding: "6px 12px", borderRadius: 20, cursor: "pointer", fontSize: 12,
-                    background: isActive ? "#364C59" : "#233240",
-                    color: isActive ? "#C7D4D9" : "#77848C",
-                    border: isActive ? "1px solid #7B2FBE" : "1px solid #364C59",
+                    background: isActive ? "var(--surface2)" : "var(--surface)",
+                    color: isActive ? "var(--text)" : "var(--text-muted)",
+                    border: isActive ? "1px solid #7B2FBE" : "1px solid var(--border)",
                   }}
                 >
-                  <Icon name={opt.icon} size={13} color={isActive ? "#7B2FBE" : "#77848C"} />
+                  <Icon name={opt.icon} size={13} color={isActive ? "#7B2FBE" : "var(--text-muted)"} />
                   {opt.label}
                 </button>
               )
@@ -193,9 +193,9 @@ function FilterModal({ onClose, className = "" }) {
           </div>
         </div>
 
-        <div style={{ borderTop: "1px solid #364C59", paddingTop: 12, paddingBottom: 12 }}>
-          <span style={{ color: "#77848C", fontSize: 12, fontWeight: 500, display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
-            <Icon name="Flag" size={12} color="#77848C" />
+        <div style={{ borderTop: "1px solid var(--border)", paddingTop: 12, paddingBottom: 12 }}>
+          <span style={{ color: "var(--text-muted)", fontSize: 12, fontWeight: 500, display: "flex", alignItems: "center", gap: 6, marginBottom: 8 }}>
+            <Icon name="Flag" size={12} color="var(--text-muted)" />
             Prioridad
           </span>
           <div style={{ display: "flex", gap: 8 }}>
@@ -208,9 +208,9 @@ function FilterModal({ onClose, className = "" }) {
                   style={{
                     flex: 1, padding: "6px 0", borderRadius: 20, cursor: "pointer",
                     fontSize: 12, fontWeight: 500,
-                    background: isActive ? opt.bg : "#233240",
-                    color: isActive ? opt.color : "#77848C",
-                    border: isActive ? `1px solid ${opt.bg}` : "1px solid #364C59",
+                    background: isActive ? opt.bg : "var(--surface)",
+                    color: isActive ? opt.color : "var(--text-muted)",
+                    border: isActive ? `1px solid ${opt.bg}` : "1px solid var(--border)",
                   }}
                 >
                   {opt.label}
@@ -222,11 +222,11 @@ function FilterModal({ onClose, className = "" }) {
 
       </div>
 
-      <div style={{ padding: "12px 16px", flexShrink: 0, borderTop: "1px solid #364C59", display: "flex", gap: 8 }}>
+      <div style={{ padding: "12px 16px", flexShrink: 0, borderTop: "1px solid var(--border)", display: "flex", gap: 8 }}>
         <Button
           onClick={clear}
           className="flex-1 py-2 rounded-xl font-medium active:scale-95 transition-all duration-150"
-          style={{ background: "#233240", color: "#77848C", border: "1px solid #364C59" }}
+          style={{ background: "var(--surface2)", color: "var(--text-muted)", border: "1px solid var(--border)" }}
         >
           Limpiar
         </Button>

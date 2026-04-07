@@ -17,20 +17,16 @@ function Navbar({ activeTab, onTabChange, className = "" }) {
           className={`
             flex flex-col items-center gap-1
             transition-all duration-200 cursor-pointer
-            ${tab.id === "add"
-              ? `w-12 h-12 rounded-full
-                 bg-[#7B2FBE] text-white
-                 hover:bg-[#9B4FDE]
-                 active:scale-95`
-              : activeTab === tab.id
-                ? "text-[#7B2FBE]"
-                : "text-[#77848C] hover:text-[#C7D4D9]"
+            ${activeTab === tab.id
+              ? "text-[#7B2FBE]"
+              : "hover:opacity-80"
             }
           `}
+          style={{ color: activeTab === tab.id ? "#7B2FBE" : "var(--text-muted)" }}
         >
           <IconButton
             iconName={tab.icon}
-            size={tab.id === "add" ? 24 : 20}
+            size={20}
             className="pointer-events-none"
           />
           {tab.label && (

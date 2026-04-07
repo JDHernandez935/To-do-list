@@ -45,13 +45,7 @@ function HomePage() {
       iconName="Plus"
       size={24}
       onClick={() => navigate("/add", { state: { background: location } })}
-      className="
-        w-14 h-14 rounded-full
-        bg-[#7B2FBE] text-white
-        hover:bg-[#9B4FDE]
-        active:scale-95 transition-all duration-150
-        shadow-lg
-      "
+      className="w-14 h-14 rounded-full bg-[#7B2FBE] text-white hover:bg-[#9B4FDE] active:scale-95 transition-all duration-150 shadow-lg"
       iconClassName="text-white"
     />
   )
@@ -62,25 +56,23 @@ function HomePage() {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Buscar tarea..."
-        className="flex-1 px-3 py-2 rounded-lg bg-[#233240] border border-[#364C59]"
-        inputClassName="text-[#C7D4D9] placeholder-[#77848C]"
-        iconClassName="text-[#77848C]"
+        className="flex-1 px-3 py-2 rounded-lg border"
+        style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+        inputClassName="text-[var(--text)] placeholder-[var(--text-muted)]"
+        iconClassName="text-[var(--text-muted)]"
       />
       <IconButton
         iconName="SlidersHorizontal"
         onClick={() => setShowFilterModal(true)}
-        className="
-          w-10 h-10 rounded-lg bg-[#233240] border border-[#364C59]
-          hover:border-[#7B2FBE] transition-all duration-200
-          flex items-center justify-center
-        "
-        iconClassName={activeFilter !== "all" ? "text-[#7B2FBE]" : "text-[#77848C]"}
+        className="w-10 h-10 rounded-lg border hover:border-[#7B2FBE] transition-all duration-200 flex items-center justify-center"
+        style={{ background: "var(--surface)", borderColor: "var(--border)" }}
+        iconClassName={activeFilter !== "all" ? "text-[#7B2FBE]" : "text-[var(--text-muted)]"}
       />
     </div>
   )
 
   const counter = (
-    <Text variant="small" className="font-medium text-[#C7D4D9]">
+    <Text variant="small" className="font-medium" style={{ color: "var(--text)" }}>
       {filteredTasks.filter(t => !t.completed).length} tareas pendientes
     </Text>
   )

@@ -1,25 +1,28 @@
 import Navbar from "../organism/Navbar"
 import Toggle from "../molecules/Toggle"
 import Icon from "../atoms/Icon"
+import { useTheme } from "../hooks/useTheme"
 
 function MainTemplate({ children, activeTab, onTabChange, fab = null, search = null, counter = null, noPadding = false }) {
-  return (
-    <div className="min-h-screen flex justify-center" style={{ background: "#00010D" }}>
-      <div className="relative w-full flex flex-col" style={{ background: "#00010D" }}>
+  const { darkMode, toggleTheme } = useTheme()
 
-        <div className="sticky top-0 z-40" style={{ background: "#00010D" }}>
+  return (
+    <div className="min-h-screen flex justify-center" style={{ background: "var(--bg)" }}>
+      <div className="relative w-full flex flex-col" style={{ background: "var(--bg)" }}>
+
+        <div className="sticky top-0 z-40" style={{ background: "var(--bg)" }}>
           <div className="flex items-center justify-between px-4 py-4">
             <Toggle
-              enabled={true}
-              onChange={() => {}}
+              enabled={darkMode}
+              onChange={toggleTheme}
               enabledClassName="bg-[#364C59]"
-              disabledClassName="bg-[#364C59]"
+              disabledClassName="bg-[#E2E8ED]"
               enabledIcon="Moon"
               disabledIcon="Sun"
             />
             <div className="flex items-center gap-2">
               <Icon name="CheckSquare" size={26} className="text-[#7B2FBE]" />
-              <span style={{ color: "#C7D4D9", fontWeight: 600, fontSize: 20 }}>
+              <span style={{ color: "var(--text)", fontWeight: 600, fontSize: 20 }}>
                 todo-inteligente
               </span>
             </div>
@@ -54,7 +57,7 @@ function MainTemplate({ children, activeTab, onTabChange, fab = null, search = n
 
         <div
           className="fixed bottom-0 left-0 right-0 z-50 border-t flex justify-center"
-          style={{ background: "#00010D", borderColor: "#364C59" }}
+          style={{ background: "var(--bg)", borderColor: "var(--border)" }}
         >
           <div className="w-full">
             <Navbar activeTab={activeTab} onTabChange={onTabChange} />

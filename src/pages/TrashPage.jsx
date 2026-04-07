@@ -6,7 +6,6 @@ import MainTemplate from "../templates/MainTemplate"
 import ModalTemplate from "../templates/ModalTemplate"
 import DeleteModal from "../organism/DeleteModal"
 import Icon from "../atoms/Icon"
-import Button from "../atoms/Button"
 
 function TrashPage() {
   const navigate = useNavigate()
@@ -92,17 +91,17 @@ function TrashPage() {
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <Icon name="Trash2" size={20} color="#77848C" />
-                <span style={{ color: "#C7D4D9", fontSize: 20, fontWeight: 600 }}>
+                <Icon name="Trash2" size={20} color="var(--text-muted)" />
+                <span style={{ color: "var(--text)", fontSize: 20, fontWeight: 600 }}>
                   Papelera
                 </span>
                 {deletedTasks.length > 0 && (
-                  <span style={{ background: "#364C59", color: "#77848C", fontSize: 12, fontWeight: 500, padding: "2px 8px", borderRadius: 20 }}>
+                  <span style={{ background: "var(--surface2)", color: "var(--text-muted)", fontSize: 12, fontWeight: 500, padding: "2px 8px", borderRadius: 20 }}>
                     {deletedTasks.length}
                   </span>
                 )}
               </div>
-              <span style={{ color: "#77848C", fontSize: 12, marginTop: 2, display: "block" }}>
+              <span style={{ color: "var(--text-muted)", fontSize: 12, marginTop: 2, display: "block" }}>
                 Las tareas se eliminan permanentemente después de 10 días
               </span>
             </div>
@@ -111,13 +110,13 @@ function TrashPage() {
               <div style={{ display: "flex", gap: 8 }}>
                 <button
                   onClick={handleRestoreAll}
-                  style={{ padding: "6px 12px", borderRadius: 8, cursor: "pointer", fontSize: 12, fontWeight: 500, background: "#233240", color: "#7B2FBE", border: "1px solid #7B2FBE" }}
+                  style={{ padding: "6px 12px", borderRadius: 8, cursor: "pointer", fontSize: 12, fontWeight: 500, background: "var(--surface)", color: "#7B2FBE", border: "1px solid #7B2FBE" }}
                 >
                   Restaurar todo
                 </button>
                 <button
                   onClick={() => setConfirmAll(true)}
-                  style={{ padding: "6px 12px", borderRadius: 8, cursor: "pointer", fontSize: 12, fontWeight: 500, background: "#4a1515", color: "#ff6b6b", border: "1px solid #ff6b6b" }}
+                  style={{ padding: "6px 12px", borderRadius: 8, cursor: "pointer", fontSize: 12, fontWeight: 500, background: "var(--danger-bg)", color: "var(--danger)", border: "1px solid var(--danger)" }}
                 >
                   Vaciar papelera
                 </button>
@@ -126,8 +125,8 @@ function TrashPage() {
           </div>
 
           {selected.length > 0 && (
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", borderRadius: 10, background: "#233240", border: "1px solid #7B2FBE" }}>
-              <span style={{ color: "#C7D4D9", fontSize: 13 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", borderRadius: 10, background: "var(--surface)", border: "1px solid #7B2FBE" }}>
+              <span style={{ color: "var(--text)", fontSize: 13 }}>
                 {selected.length} seleccionada(s)
               </span>
               <div style={{ display: "flex", gap: 8 }}>
@@ -139,7 +138,7 @@ function TrashPage() {
                 </button>
                 <button
                   onClick={handleDeleteSelected}
-                  style={{ padding: "4px 12px", borderRadius: 8, cursor: "pointer", fontSize: 12, background: "#4a1515", color: "#ff6b6b", border: "none" }}
+                  style={{ padding: "4px 12px", borderRadius: 8, cursor: "pointer", fontSize: 12, background: "var(--danger-bg)", color: "var(--danger)", border: "none" }}
                 >
                   Eliminar
                 </button>
@@ -149,11 +148,11 @@ function TrashPage() {
 
           {deletedTasks.length === 0 ? (
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12, minHeight: "50vh" }}>
-              <div style={{ width: 64, height: 64, borderRadius: "50%", background: "#233240", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Icon name="Trash2" size={28} color="#364C59" />
+              <div style={{ width: 64, height: 64, borderRadius: "50%", background: "var(--surface)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Icon name="Trash2" size={28} color="var(--surface2)" />
               </div>
-              <span style={{ color: "#77848C", fontSize: 15, fontWeight: 500 }}>La papelera está vacía</span>
-              <span style={{ color: "#364C59", fontSize: 13 }}>Las tareas eliminadas aparecerán aquí</span>
+              <span style={{ color: "var(--text-muted)", fontSize: 15, fontWeight: 500 }}>La papelera está vacía</span>
+              <span style={{ color: "var(--border)", fontSize: 13 }}>Las tareas eliminadas aparecerán aquí</span>
             </div>
           ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -168,8 +167,8 @@ function TrashPage() {
                   <div
                     key={task.id}
                     style={{
-                      borderRadius: 12, background: "#233240",
-                      border: isSelected ? "1px solid #7B2FBE" : "1px solid #364C59",
+                      borderRadius: 12, background: "var(--surface)",
+                      border: isSelected ? "1px solid #7B2FBE" : "1px solid var(--border)",
                       transition: "all 0.15s", overflow: "hidden",
                     }}
                   >
@@ -179,8 +178,8 @@ function TrashPage() {
                         onClick={() => toggleSelect(task.id)}
                         style={{
                           width: 18, height: 18, borderRadius: 4, flexShrink: 0, cursor: "pointer",
-                          background: isSelected ? "#7B2FBE" : "#364C59",
-                          border: isSelected ? "none" : "1px solid #77848C",
+                          background: isSelected ? "#7B2FBE" : "var(--surface2)",
+                          border: isSelected ? "none" : "1px solid var(--border2)",
                           display: "flex", alignItems: "center", justifyContent: "center",
                         }}
                       >
@@ -188,14 +187,14 @@ function TrashPage() {
                       </button>
 
                       <div style={{ flex: 1, minWidth: 0 }}>
-                        <span style={{ color: "#77848C", fontSize: 14, textDecoration: "line-through", display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        <span style={{ color: "var(--text-muted)", fontSize: 14, textDecoration: "line-through", display: "block", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                           {task.title}
                         </span>
                         <div style={{ display: "flex", gap: 12, marginTop: 4 }}>
-                          <span style={{ color: "#364C59", fontSize: 11 }}>
+                          <span style={{ color: "var(--border2)", fontSize: 11 }}>
                             Eliminada hace {daysAgo}d
                           </span>
-                          <span style={{ color: isUrgent ? "#ff6b6b" : "#77848C", fontSize: 11, fontWeight: isUrgent ? 600 : 400 }}>
+                          <span style={{ color: isUrgent ? "var(--danger)" : "var(--text-muted)", fontSize: 11, fontWeight: isUrgent ? 600 : 400 }}>
                             Expira en {daysLeft}d
                           </span>
                         </div>
@@ -204,24 +203,24 @@ function TrashPage() {
                       <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
                         <button
                           onClick={() => handleRestore(task.id)}
-                          style={{ padding: "4px 10px", borderRadius: 8, cursor: "pointer", fontSize: 12, fontWeight: 500, background: "#364C59", color: "#7B2FBE", border: "1px solid #7B2FBE", transition: "all 0.15s" }}
+                          style={{ padding: "4px 10px", borderRadius: 8, cursor: "pointer", fontSize: 12, fontWeight: 500, background: "var(--surface2)", color: "#7B2FBE", border: "1px solid #7B2FBE", transition: "all 0.15s" }}
                         >
                           Restaurar
                         </button>
                         <button
                           onClick={() => setConfirmId(task.id)}
-                          style={{ width: 28, height: 28, borderRadius: 8, cursor: "pointer", background: "#4a1515", border: "none", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s" }}
+                          style={{ width: 28, height: 28, borderRadius: 8, cursor: "pointer", background: "var(--danger-bg)", border: "none", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.15s" }}
                         >
-                          <Icon name="Trash2" size={13} color="#ff6b6b" />
+                          <Icon name="Trash2" size={13} color="var(--danger)" />
                         </button>
                       </div>
                     </div>
 
-                    <div style={{ height: 3, background: "#364C59" }}>
+                    <div style={{ height: 3, background: "var(--surface2)" }}>
                       <div style={{
                         height: "100%", borderRadius: 2, transition: "width 0.3s",
                         width: `${progress}%`,
-                        background: isUrgent ? "#ff6b6b" : daysLeft <= 5 ? "#facc15" : "#7B2FBE",
+                        background: isUrgent ? "var(--danger)" : daysLeft <= 5 ? "#facc15" : "#7B2FBE",
                       }} />
                     </div>
                   </div>

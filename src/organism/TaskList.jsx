@@ -23,11 +23,11 @@ function TaskList({ tasks, onToggle, className = "", activeFilter = "all", searc
         className="flex flex-col items-center justify-center gap-3"
         style={{ minHeight: "50vh" }}
       >
-        <Icon name={emptyState.icon} size={48} style={{ color: "#364C59" }} />
-        <Text variant="body" className="font-medium" style={{ color: "#77848C" }}>
+        <Icon name={emptyState.icon} size={48} color="var(--surface2)" />
+        <Text variant="body" className="font-medium" style={{ color: "var(--text-muted)" }}>
           {emptyState.title}
         </Text>
-        <Text variant="small" className="text-center px-8" style={{ color: "#364C59" }}>
+        <Text variant="small" className="text-center px-8" style={{ color: "var(--border2)" }}>
           {emptyState.subtitle}
         </Text>
       </div>

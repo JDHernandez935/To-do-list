@@ -111,7 +111,7 @@ function CalendarPage() {
           >
             <span style={{
               fontSize: 11,
-              color: isSelected ? "#fff" : isTodayDate ? "#7B2FBE" : "#C7D4D9",
+              color: isSelected ? "#fff" : isTodayDate ? "#7B2FBE" : "var(--text)",
               fontWeight: isSelected || isTodayDate ? 600 : 400,
             }}>
               {format(cloneDay, "d")}
@@ -138,7 +138,7 @@ function CalendarPage() {
     return (
       <div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-          <span style={{ color: "#C7D4D9", fontSize: 12, fontWeight: 600, textTransform: "capitalize" }}>
+          <span style={{ color: "var(--text)", fontSize: 12, fontWeight: 600, textTransform: "capitalize" }}>
             {format(currentMonth, "MMMM yyyy", { locale: es })}
           </span>
           <div style={{ display: "flex", gap: 2 }}>
@@ -146,21 +146,21 @@ function CalendarPage() {
               iconName="ChevronLeft"
               onClick={() => setCurrentMonth(subMonths(currentMonth, 1))}
               className="w-5 h-5 rounded flex items-center justify-center hover:opacity-70 transition-opacity"
-              iconClassName="text-[#77848C]"
+              iconClassName="text-[var(--text-muted)]"
               size={12}
             />
             <IconButton
               iconName="ChevronRight"
               onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}
               className="w-5 h-5 rounded flex items-center justify-center hover:opacity-70 transition-opacity"
-              iconClassName="text-[#77848C]"
+              iconClassName="text-[var(--text-muted)]"
               size={12}
             />
           </div>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", gap: 1, marginBottom: 4 }}>
           {days.map(d => (
-            <span key={d} style={{ fontSize: 10, color: "#77848C", textAlign: "center" }}>{d}</span>
+            <span key={d} style={{ fontSize: 10, color: "var(--text-muted)", textAlign: "center" }}>{d}</span>
           ))}
         </div>
         {rows}
@@ -171,7 +171,7 @@ function CalendarPage() {
   const timeOptions = [
     { id: "morning", label: "Mañana", icon: "Sunrise", color: "#facc15" },
     { id: "afternoon", label: "Tarde", icon: "Sun", color: "#60a5fa" },
-    { id: "night", label: "Noche", icon: "Moon", color: "#C7D4D9" },
+    { id: "night", label: "Noche", icon: "Moon", color: "var(--text)" },
   ]
 
   const priorityOptions = [
@@ -185,14 +185,14 @@ function CalendarPage() {
   const sidebar = (
     <div style={{ display: "flex", flexDirection: "column", gap: 12, width: 220, flexShrink: 0 }}>
 
-      <div style={{ background: "#233240", borderRadius: 12, padding: "12px 10px", border: "1px solid #364C59" }}>
+      <div style={{ background: "var(--surface)", borderRadius: 12, padding: "12px 10px", border: "1px solid var(--border)" }}>
         {renderMiniCalendar()}
       </div>
 
-      <div style={{ background: "#233240", borderRadius: 12, padding: 12, border: "1px solid #364C59" }}>
+      <div style={{ background: "var(--surface)", borderRadius: 12, padding: 12, border: "1px solid var(--border)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10 }}>
-          <Icon name="Clock" size={13} color="#77848C" />
-          <span style={{ color: "#C7D4D9", fontSize: 13, fontWeight: 600 }}>Categorías</span>
+          <Icon name="Clock" size={13} color="var(--text-muted)" />
+          <span style={{ color: "var(--text)", fontSize: 13, fontWeight: 600 }}>Categorías</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
           {timeOptions.map(opt => {
@@ -205,29 +205,29 @@ function CalendarPage() {
                 style={{
                   display: "flex", alignItems: "center", gap: 8,
                   padding: "6px 8px", borderRadius: 8, cursor: "pointer",
-                  background: isActive ? "#364C59" : "transparent",
+                  background: isActive ? "var(--surface2)" : "transparent",
                   border: isActive ? `1px solid ${opt.color}` : "1px solid transparent",
                   transition: "all 0.15s", width: "100%",
                 }}
               >
-                <div style={{ width: 15, height: 15, borderRadius: 4, background: isActive ? opt.color : "#364C59", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <div style={{ width: 15, height: 15, borderRadius: 4, background: isActive ? opt.color : "var(--surface2)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                   {isActive && <Icon name="Check" size={9} color="#000" />}
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: 4, flex: 1 }}>
-                  <Icon name={opt.icon} size={11} color={isActive ? opt.color : "#77848C"} />
-                  <span style={{ color: isActive ? "#C7D4D9" : "#77848C", fontSize: 12 }}>{opt.label}</span>
+                  <Icon name={opt.icon} size={11} color={isActive ? opt.color : "var(--text-muted)"} />
+                  <span style={{ color: isActive ? "var(--text)" : "var(--text-muted)", fontSize: 12 }}>{opt.label}</span>
                 </div>
-                <span style={{ color: "#77848C", fontSize: 11 }}>{count}</span>
+                <span style={{ color: "var(--text-muted)", fontSize: 11 }}>{count}</span>
               </button>
             )
           })}
         </div>
       </div>
 
-      <div style={{ background: "#233240", borderRadius: 12, padding: 12, border: "1px solid #364C59" }}>
+      <div style={{ background: "var(--surface)", borderRadius: 12, padding: 12, border: "1px solid var(--border)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10 }}>
-          <Icon name="Flag" size={13} color="#77848C" />
-          <span style={{ color: "#C7D4D9", fontSize: 13, fontWeight: 600 }}>Prioridad</span>
+          <Icon name="Flag" size={13} color="var(--text-muted)" />
+          <span style={{ color: "var(--text)", fontSize: 13, fontWeight: 600 }}>Prioridad</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
           {priorityOptions.map(opt => {
@@ -240,16 +240,16 @@ function CalendarPage() {
                 style={{
                   display: "flex", alignItems: "center", gap: 8,
                   padding: "6px 8px", borderRadius: 8, cursor: "pointer",
-                  background: isActive ? "#364C59" : "transparent",
+                  background: isActive ? "var(--surface2)" : "transparent",
                   border: "none", transition: "all 0.15s", width: "100%",
                 }}
               >
                 <Icon name={opt.icon} size={13} color={opt.color} />
-                <span style={{ color: isActive ? "#C7D4D9" : "#77848C", fontSize: 12, flex: 1, textAlign: "left" }}>
+                <span style={{ color: isActive ? "var(--text)" : "var(--text-muted)", fontSize: 12, flex: 1, textAlign: "left" }}>
                   {opt.label}
                 </span>
-                <Icon name="ChevronRight" size={11} color="#364C59" />
-                <span style={{ color: "#77848C", fontSize: 11 }}>{count}</span>
+                <Icon name="ChevronRight" size={11} color="var(--border)" />
+                <span style={{ color: "var(--text-muted)", fontSize: 11 }}>{count}</span>
               </button>
             )
           })}
@@ -266,18 +266,18 @@ function CalendarPage() {
         {sidebar}
 
         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 12, minWidth: 0 }}>
-          <span style={{ color: "#C7D4D9", fontSize: 15, fontWeight: 600, textTransform: "capitalize" }}>
+          <span style={{ color: "var(--text)", fontSize: 15, fontWeight: 600, textTransform: "capitalize" }}>
             {format(selectedDay, "EEEE d 'de' MMMM", { locale: es })}
           </span>
 
           {selectedDayTasks.length === 0 ? (
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 8, minHeight: "40vh" }}>
-              <Icon name="CalendarX" size={36} color="#364C59" />
-              <span style={{ color: "#77848C", fontSize: 13, textAlign: "center" }}>
+              <Icon name="CalendarX" size={36} color="var(--surface2)" />
+              <span style={{ color: "var(--text-muted)", fontSize: 13, textAlign: "center" }}>
                 No hay tareas para este día
               </span>
               {(timeFilter !== "all" || priorityFilter !== "all") && (
-                <span style={{ color: "#364C59", fontSize: 12, textAlign: "center" }}>
+                <span style={{ color: "var(--border)", fontSize: 12, textAlign: "center" }}>
                   Prueba cambiando los filtros
                 </span>
               )}
