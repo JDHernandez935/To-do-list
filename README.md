@@ -1,16 +1,45 @@
-# React + Vite
+# todo-inteligente
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Una aplicación web de gestión de tareas construida con React, diseñada para organizar tu día de forma eficiente con filtros avanzados, calendario y modo oscuro/claro.
 
-Currently, two official plugins are available:
+## Características
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Crear, editar, ver y eliminar tareas
+- Prioridades: Alta, Media, Baja
+- Fechas y horas límite con badges inteligentes (Hoy, Mañana, Próximo, Vencida)
+- Búsqueda en tiempo real y filtros avanzados por estado, prioridad, fecha y hora del día
+- Vista de calendario con filtros por categoría y prioridad
+- Papelera con restauración y eliminación permanente a los 10 días
+- Modo oscuro y claro
+- Persistencia en localStorage
 
-## React Compiler
+## Tecnologías
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React + Vite
+- Tailwind CSS
+- React Router DOM
+- date-fns
+- Lucide React
 
-## Expanding the ESLint configuration
+## Instalación
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Clona el repositorio:
+
+```bash
+git clone https://github.com/JDHernandez935/To-do-list.git
+cd todo-inteligente
+```
+
+Instala las dependencias:
+
+```bash
+npm install
+```
+
+Inicia el servidor de desarrollo:
+
+```bash
+npm run dev
+```
+
+Abre [http://localhost:5173](http://localhost:5173) en tu navegador.
